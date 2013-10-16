@@ -12,10 +12,25 @@
 body {
     
 }
+.icon-bar {
+
+}
 .above-fold {
-  min-height:625px;
+  color: #fff;
   background-color: #fff;
     
+}
+.seperator,
+.seperator:hover,
+.seperater:active {
+  width:1px;
+  border-right:1px solid rgba(0,0,0,0.10) !important;
+  padding-right: 5px !important;
+  cursor:default !important;
+  
+}
+.above-fold > .container:first-child {
+  margin-top:2.5em;
 }
 
 

@@ -4199,6 +4199,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-toggle {
+
   position: relative;
   float: right;
   padding: 9px 10px;
@@ -4211,6 +4212,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-toggle .icon-bar {
+
   display: block;
   width: 22px;
   height: 2px;
@@ -4219,6 +4221,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
+
 }
 
 @media (min-width: 768px) {
@@ -4355,6 +4358,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-btn {
+
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -4373,7 +4377,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: #fff;
   border-color: #e7e7e7;
 }
 
@@ -4425,7 +4429,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #cccccc;
+  background-color: #ccc;
 }
 
 .navbar-default .navbar-collapse,
@@ -4542,7 +4546,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #ffffff;
+  background-color: #000;
 }
 
 .navbar-inverse .navbar-collapse,

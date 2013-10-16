@@ -12,9 +12,9 @@
 body {
     
 }
-.hero {
-    /*background-color: #90b974;
-    background-image: url('../img/vector_texture_large.png') !important;*/
+.above-fold {
+  min-height:625px;
+  background-color: #fff;
     
 }
 

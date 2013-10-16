@@ -4,10 +4,19 @@
    Author's custom styles
    ========================================================================== */
 
+/* THEMING 
+    
+  Important colors from bootstrap-theme placed here for
 
-
-
-
+*/
+body {
+    
+}
+.hero {
+    /*background-color: #90b974;
+    background-image: url('../img/vector_texture_large.png') !important;*/
+    
+}
 
 
 

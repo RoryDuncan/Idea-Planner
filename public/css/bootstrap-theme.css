@@ -149,21 +149,46 @@
 }
 
 .navbar {
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#ffffff), to(#f8f8f8));
-  background-image: -webkit-linear-gradient(top, #ffffff, 0%, #f8f8f8, 100%);
-  background-image: -moz-linear-gradient(top, #ffffff 0%, #f8f8f8 100%);
-  background-image: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 100%);
-  background-repeat: repeat-x;
+  /*background-color: #9fcd81;*/
   border-radius: 4px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff8f8f8', GradientType=0);
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
 }
 
-.navbar .navbar-nav > .active > a {
-  background-color: #f8f8f8;
+/*
+  =========================
+        COLOR THEME
+  =========================
+
+  main color: #9fcd81;
+  white space: #ffffff;
+  main-color-darkened: #50872C;
+  secondary:#a90d81;
+
+
+*/
+.navbar-brand {
+  font-size: 2em;
+  font-weight: 200;
+  color: #9fcd81;
+}
+.navbar-brand:hover{
+  color: #a90d81;
+}
+  
+.navbar .navbar-nav a {
+
+  color: #899;
 }
 
+.navbar .navbar-nav > .active > a {
+  
+}
+
+.navbar .navbar-nav :hover {
+  color: #566;
+  background-color: #fff !important;
+}
 .navbar-brand,
 .navbar-nav > li > a {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);

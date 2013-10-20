@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="css/bootstrap-theme.css">
         <link rel="stylesheet" href="css/main.css">
 
-        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/lib/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -60,44 +60,20 @@
     </div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron above-fold">
+    <div class="above-fold jumbotron">
       <div class="container">
         <h1>A web app that helps you</h1>
         <p>Organize your ideas, nourish them, & watch them sprout into developed concepts.</p>
         <p><a class="btn btn-default btn-lg">Learn more &raquo;</a></p>
       </div>
     </div>
-    <script type="text/javascript">
-      // Above-the-fold content should be dealt with first
 
-      // Adjust the jumbotron to be screen-filling dynamically.
-      // adjust while taking into account the navigation-bar.
-      (function(){
-        var h = window.innerHeight,
-            w = window.innerWidth,
-            variance = ~~(Math.random()*150),
-            nav = document.querySelectorAll('.navbar-default'),
-            hero = document.querySelectorAll('.above-fold');
-
-        nav = nav[0];
-        hero = hero[0];
-
-        h = h - nav.offsetHeight;
-
-        hero.style.height = h + "px";
-        // the next few lines are probably tentative
-        h += variance;
-        w += variance;
-        hero.style.background = "url('http://placekitten.com/"+w+"/"+h+"') no-repeat center center"
-      })();
-
-    </script>
 
     <div class="container">
       <!-- Example row of columns -->
-      <h1>This web app is still under construction. Check back later!</h1>
+      <h3>This web app is still under construction. Check back later!</h3>
 
-      <hr>
+      <hr />
 
       <footer>
         <p>&copy; Rory Duncan 2013</p>
@@ -108,11 +84,10 @@
         PRODUCTION
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="js/lib/jquery/jquery-1.10.1.min.js"><\/script>')</script>
       -->
-        <script src="js/vendor/jquery-1.10.1.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-
+        <script src="js/lib/jquery/jquery-1.10.1.min.js"></script>
+        <script src="js/lib/bootstrap/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
       <!-- 
 

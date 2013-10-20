@@ -9,16 +9,17 @@
   Important colors from bootstrap-theme placed here for
 
 */
-body {
-    
-}
-.icon-bar {
+/*    Keep the scrollbar visible on all pages to prevent navbar margin shifts.        */
+html {overflow-y: scroll;}
 
-}
 .above-fold {
-  color: #fff;
+  width: 100%;
+  color: #000;
   background-color: #fff;
-    
+  text-shadow: 1px 1px 4px rgba(255,255,255,0.33);
+}
+.navbar-default .container {
+
 }
 .seperator,
 .seperator:hover,
@@ -29,9 +30,7 @@ body {
   cursor:default !important;
   
 }
-.above-fold > .container:first-child {
-  margin-top:2.5em;
-}
+
 
 
 

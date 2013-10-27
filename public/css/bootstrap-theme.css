@@ -150,8 +150,8 @@
 
 .navbar,
 .navbar-default {
-  background-color: #fff !important;
-  /*background-color: #9fcd81;*/
+  /*background-color: #fff !important;*/
+  background-color: #fff;
   border-radius: 4px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
 }
@@ -174,7 +174,7 @@
   color: #9fcd81;
 }
 .navbar-default .navbar-brand:hover{
-  color: #a90d81;
+  color: #b5773c;
 }
   
 .navbar .navbar-nav a {

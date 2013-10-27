@@ -14,13 +14,15 @@ html {overflow-y: scroll;}
 
 .above-fold {
   width: 100%;
-  color: #000;
-  background-color: #fff;
+  color: #363636;
+  background-color: #fcfcfc;
   text-shadow: 1px 1px 4px rgba(255,255,255,0.33);
 }
-.navbar-default .container {
-
+.navbar-default li.active > a {
+  color: #b5773c !important;
+  background-color: #fff !important;
 }
+
 .seperator,
 .seperator:hover,
 .seperater:active {
@@ -30,16 +32,3 @@ html {overflow-y: scroll;}
   cursor:default !important;
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

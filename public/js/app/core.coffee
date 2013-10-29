@@ -1,13 +1,25 @@
+
 Sprout = window.Sprout or {}
 App = new Backbone.Marionette.Application()
 
 App.addRegions
-  "projects": ".app-projects"
+  projects: ".app-container"
 
+
+App.addInitializer ->
+
+  ProjectList = Sprout.View.ProjectList
+  mainView = new ProjectList
+
+  App.projects.show mainView
+  
 
 
 window.Sprout.App = App
-App.start()
-console.log "%c ← Sprout.io →", "color: #60aa90; font-weight: 800;"
-console.log Sprout
+
+$(document).ready ->
+  App.start()
+  console.log Sprout
+
+
 

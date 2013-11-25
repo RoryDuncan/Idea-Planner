@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="css/bootstrap.css">
 
         <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <link rel="stylesheet" href="css/simptip-mini.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/app.css">
 
@@ -61,24 +62,33 @@
 
     <div class="container">
       
-        <hr />
-        <footer>
+      <hr />
+      <footer>
           <p>&copy; Rory Duncan 2013</p>
-        </footer>
-      </div> <!-- /container -->
+      </footer>
+    </div> <!-- /container -->
       
-
-
       <!-- ENABLE IN PRODUCTION
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/lib/jquery/jquery-1.10.1.min.js"><\/script>')</script>
       -->
 
+<!-- Templates -->
+
+  <script id="itemView-template" type="text/template">
+    ITEM TEMPLATE
+  </script>
+
+  <script id="ProjectList-template" type="text/template">
+    <div class="app-projects">
+      <h3 class="app-header"> Projects </h3>
+    </div>
+  </script>
+<!-- End of Templates -->
+
       <script src="js/bundle.js"></script>
-        
-        
-      <!-- PRODUCTION
+      <!-- ENABLE IN PRODUCTION
    
       <script>
           var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
@@ -87,5 +97,6 @@
           s.parentNode.insertBefore(g,s)}(document,'script'));
       </script>
       -->
+
   </body>
 </html>

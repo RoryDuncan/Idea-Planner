@@ -1,3 +1,4 @@
-Sprout  = window.Sprout or {}
-Sprout.Collection = Backbone.Collection.extend
-  "model": Sprout.Model
+App  = window.App
+
+App.Collection = Backbone.Collection.extend
+  "model": App.Model

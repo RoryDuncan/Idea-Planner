@@ -1,8 +1,5 @@
-var Sprout;
 
-Sprout = window.Sprout || {};
-
-Sprout.Model = Backbone.Model.extend({
+App.Model = Backbone.Model.extend({
   "defaults": {
     "name": "Untitled",
     "description": ""

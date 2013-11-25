@@ -1,25 +1,20 @@
 
-Sprout = window.Sprout or {}
-App = new Backbone.Marionette.Application()
 
-App.addRegions
+core = new Backbone.Marionette.Application()
+
+core.addRegions
   projects: ".app-container"
 
+core.addInitializer ->
 
-App.addInitializer ->
-
-  ProjectList = Sprout.View.ProjectList
+  ProjectList = App.View.ProjectList
   mainView = new ProjectList
 
-  App.projects.show mainView
+  core.projects.show mainView
   
+App.core = core
 
-
-window.Sprout.App = App
 
 $(document).ready ->
-  App.start()
-  console.log Sprout
 
-
-
+  core.start()

@@ -1,16 +1,10 @@
-var Sprout;
+var App;
 
-Sprout = window.Sprout || {};
+App = window.App;
 
-Sprout.Templates = {};
+App.Templates = {};
 
-console.clear();
-
-console.log("%cSprout.io", "color: #60aa90; font-weight: 800; font-size:16px");
-
-console.log("Loading Templates");
-
-Sprout.Templates.ListedItem = function(data) {
+App.Templates.ListedItem = function(data) {
   var template;
   template = "#item-template";
   console.log(template);

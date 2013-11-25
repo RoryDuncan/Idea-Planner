@@ -69,41 +69,17 @@
       
 
 
-      <!-- PRODUCTION
+      <!-- ENABLE IN PRODUCTION
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/lib/jquery/jquery-1.10.1.min.js"><\/script>')</script>
       -->
 
-      <!-- Templates -->
-        <script id="itemView-template" type="text/template">
-          ITEM TEMPLATE
-        </script>
-        <script id="ProjectList-template" type="text/template">
-          Projects:
-        </script>
-      <!-- /Templates -->
-
-        <script src="js/lib/jquery/jquery-1.10.1.min.js"></script>
-        <script src="js/lib/bootstrap/bootstrap.min.js"></script>
-
-
-      <!--  APP Dependents -->
-        <script src="js/lib/underscore/underscore.min.js"></script>
-        <script src="js/lib/backbone/backbone.dev.js"></script>
-        <!-- backbone.wrqr and backbone.babysitter bundled in 'backbone.marionette.min.js' -->
-        <script src="js/lib/backbone/backbone.marionette.min.js"></script>
-      
-        <!-- APP -->
-        <script src="js/app/templates.js"></script>
-        <script src="js/app/models/models.js"></script>
-        <script src="js/app/collections/collections.js"></script>
-        <script src="js/app/views/views.js"></script>
-        <script src="js/app/core.js"></script>
+      <script src="js/bundle.js"></script>
         
         
       <!-- PRODUCTION
-
+   
       <script>
           var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
           (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

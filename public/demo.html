@@ -76,15 +76,18 @@
 
 <!-- Templates -->
 
-  <script id="itemView-template" type="text/template">
-    ITEM TEMPLATE
+  <script id="app-item-template" type="text/template">
+    <li> <a href =""><%= name %></a> - <%= description %></li>
   </script>
 
   <script id="ProjectList-template" type="text/template">
     <div class="app-projects-wrapper">
       <h1 class="app-projects-header"> Projects </h1>
-      <div class="app-projects-list">
+      <div class="app-projects-list-wrapper">
         <p class="well hidden">Looks like there is nothing here!<p>
+        <ul class="app-projects-list">
+        
+        </ul>
       <div>
       <h3 class="app-projects-footer">
         <button class="btn btn-info"> Add a concept. </button>

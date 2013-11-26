@@ -2,8 +2,9 @@
 App.View = {}
 
 App.View.Item = Backbone.Marionette.ItemView.extend
-  template: "#itemView-template"
-  tagName: 'div'
+  model: App.Model
+  template: _.template $("#app-item-template").html()
+  tagName: 'li'
   className: ''
 
 
@@ -13,4 +14,12 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
   className: " "
   template: "#ProjectList-template" 
   itemView: App.View.Item
+  itemViewContainer: ".app-projects-list"
+  collection: App.projects
+  collectionEvents:
+    "add": ->
+      
+      @render()
+      
+
 

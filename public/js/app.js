@@ -9,8 +9,8 @@ var $ = require('jquery-browserify'),
 var bootstrap = require('./lib/bootstrap.min.js');
 
 // app dependencies
-var underscore = require('underscore');
-
+var _ = require('underscore');
+	window._ = _;
 var Backbone =  require('backbone');
     Backbone.$ = $;
     window.Backbone = Backbone;

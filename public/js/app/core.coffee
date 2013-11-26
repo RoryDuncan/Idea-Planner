@@ -18,13 +18,34 @@ core.addInitializer ->
   # show it
   core.AppContainer.show mainView
 
+testData = (numberOfModels) ->
+  console.warn "Model Creation"
+  modelList = []
+  for x in [0..numberOfModels]
+    console.log x
+    m = new App.Model({
+      name: "Model " + x
+      description: "just wow " + x
+    })
+    modelList.push m
+
+
+  App.projects.add modelList
 # namespacing
 App.core = core
 
 
 $(document).ready ->
-
-  console.log window.App
-
   
+
+  #App.projects.reset()
+  
+  console.log "Starting App"
   App.core.start()
+
+  console.log "Adding test models"
+  testData(8)
+  console.log window.App
+  console.log(App.projects)
+  #App.projects.save()
+

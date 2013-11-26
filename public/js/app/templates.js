@@ -4,11 +4,16 @@ App = window.App;
 
 App.Templates = {};
 
-App.Templates.ListedItem = function(data) {
-  var template;
-  template = "#item-template";
+App.Templates.ListedItem = function(model) {
+  var compiled, template;
+  template = $("#app-item-template").html();
   console.log(template);
-  return _.template(template, data);
+  compiled = _.template(template, {
+    name: model.name,
+    description: model.description
+  });
+  console.log(compiled);
+  return compiled;
 };
 
 /*

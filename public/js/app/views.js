@@ -18,7 +18,7 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend({
   collection: App.projects,
   collectionEvents: {
     "add": function() {
-      return this.render();
+      return console.log("Model added to collection");
     }
   }
 });

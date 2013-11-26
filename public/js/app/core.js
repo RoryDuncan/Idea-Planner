@@ -37,7 +37,7 @@ $(document).ready(function() {
   console.log("Starting App");
   App.core.start();
   console.log("Adding test models");
-  testData(8);
+  testData(2);
   console.log(window.App);
   return console.log(App.projects);
 });

@@ -44,7 +44,7 @@ $(document).ready ->
   App.core.start()
 
   console.log "Adding test models"
-  testData(8)
+  testData(2)
   console.log window.App
   console.log(App.projects)
   #App.projects.save()

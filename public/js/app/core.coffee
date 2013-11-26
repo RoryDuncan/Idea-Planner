@@ -38,14 +38,24 @@ App.core = core
 $(document).ready ->
   
 
-  #App.projects.reset()
+  App.projects.reset()
   
   console.log "Starting App"
   App.core.start()
 
   console.log "Adding test models"
-  testData(2)
+  #testData(2)
   console.log window.App
   console.log(App.projects)
-  #App.projects.save()
+  
+  response = App.projects.sync "read", App.projects,
+    success: (a, b, c) -> 
+      console.log "success!" 
+      console.log a, b, c
+    error: (a, b, c) -> 
+      console.log "not a sucess.." 
+      console.log a, b, c
+  console.log "waiting.."
+  
+
 

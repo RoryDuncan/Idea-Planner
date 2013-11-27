@@ -21,8 +21,7 @@ core.addInitializer ->
 testData = (numberOfModels) ->
   console.warn "Model Creation"
   modelList = []
-  for x in [0..numberOfModels]
-    console.log x
+  for x in [0..(numberOfModels-1)]
     m = new App.Model({
       name: "Model " + x
       description: "just wow " + x
@@ -38,24 +37,31 @@ App.core = core
 $(document).ready ->
   
 
-  App.projects.reset()
+  #App.projects.reset()
   
   console.log "Starting App"
   App.core.start()
 
   console.log "Adding test models"
-  #testData(2)
+  testData(4)
   console.log window.App
   console.log(App.projects)
   
-  response = App.projects.sync "read", App.projects,
-    success: (a, b, c) -> 
+  console.log "%cwriting..", "font-weight:900"
+  ###
+  update = App.projects.sync "create", App.projects,
+    success: (a) -> 
       console.log "success!" 
-      console.log a, b, c
-    error: (a, b, c) -> 
-      console.log "not a sucess.." 
-      console.log a, b, c
-  console.log "waiting.."
-  
-
+    error: (a) -> 
+      console.log "not a success.." 
+  ###
+  console.log "%creading..", "font-weight:900"
+  ###
+  read = App.projects.sync "read", App.projects,
+    success: (a) -> 
+      console.log "success!" 
+    error: (a) -> 
+      console.log "not a success.." 
+  ###
+  console.log App.projects
 

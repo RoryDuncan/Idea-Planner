@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="css/simptip-mini.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/vex.css" />
+        <link rel="stylesheet" href="css/vex-theme-wireframe.css" />
 
         <script src="js/lib/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   </head>
@@ -78,19 +80,19 @@
 
   <script id="app-item-template" type="text/template">
     <li>
-      <div>
+      <h4 class=" span2">
         <a href ="">
           <%= name %>
         </a>
-      </div>
-      <div>
+      </h4>
+      <div class="span4">
         <%= description %>
       </div>
     </li>
   </script>
 
   <script id="ProjectList-template" type="text/template">
-    <div class="app-projects-wrapper">
+    <div class="app-projects-wrapper container">
       <h1 class="app-projects-header"> Projects </h1>
       <div class="app-projects-list-wrapper">
         <p class="well hidden">Looks like there is nothing here!<p>
@@ -98,10 +100,14 @@
         
         </ul>
       <div>
-      <h3 class="app-projects-footer">
-        <button class="btn btn-info"> Add a concept. </button>
-        <button class="btn btn-info"> Need help? </button>
-      </h3>
+      <div class="app-projects-footer">
+
+        <!-- Button trigger modal -->
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+          New Concept
+        </button>
+
+      </div>
     </div>
   </script>
 <!-- End of Templates -->

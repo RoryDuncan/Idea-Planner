@@ -80,12 +80,12 @@
 
   <script id="app-item-template" type="text/template">
     <li>
-      <h4 class=" span2">
+      <h4 class="span4 ">
         <a href ="">
           <%= name %>
         </a>
       </h4>
-      <div class="span4">
+      <div class="span2">
         <%= description %>
       </div>
     </li>
@@ -95,15 +95,14 @@
     <div class="app-projects-wrapper container">
       <h1 class="app-projects-header"> Projects </h1>
       <div class="app-projects-list-wrapper">
-        <p class="well hidden">Looks like there is nothing here!<p>
+      <!-- todo: add emptyView -->
         <ul class="app-projects-list">
         
         </ul>
       <div>
       <div class="app-projects-footer">
 
-        <!-- Button trigger modal -->
-        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        <button class="btn btn-primary">
           New Concept
         </button>
 

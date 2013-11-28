@@ -7,7 +7,30 @@
 
 .app-projects-wrapper {
 	margin: 0 auto;
-	width: 80%;
+	width: 100%;
 }
 
+
+.app-projects-list-wrapper {}
+ul.app-projects-list {
+	list-style-type: none;
+}
+ul.app-projects-list > li {
+	margin: 0 0;
+	padding: 5px 0px 5px 25px;
+	border-left: 1px solid rgba(255,255,255,0);
+	border-bottom: 1px solid #f9f0ff;
+}
+ul.app-projects-list > li:hover {
+	border-left: 1px solid #242;
+}
+ul.app-projects-list li h1,
+ul.app-projects-list li h2,
+ul.app-projects-list li h3,
+ul.app-projects-list li h4 {
+	text-transform: uppercase;
+}
+ul.app-projects-list li div {
+	color:#666;
+}
 

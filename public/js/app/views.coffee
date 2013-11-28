@@ -17,21 +17,36 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
   itemViewContainer: ".app-projects-list"
   collection: App.projects
   events:
-    "click .app-projects-footer > button.btn": ->
-      callback = (val) ->
-        console.log val
-      # first dialogue for naming the project
-      vex.dialog.prompt
-        message: 'Concept Name:',
-        callback: (value) ->
-          callback value
-          # second dialogue for model description
-          if value
-            
-            vex.dialog.prompt
-              message: (value + "\'s description:"),
-              callback: callback 
+    "click .app-projects-footer > button.btn": () ->
+      @createModelPrompt()
+    
+  createModelPrompt: () ->
+    ctx = @
+    name = false
+    description = ""
 
+    # first dialogue for naming the project
+    vex.dialog.prompt
+
+      message: 'Concept Name:',
+      callback: (projectName) ->
+        # second dialogue for model description
+
+        if projectName
+
+          vex.dialog.prompt
+
+            message: (projectName + "\'s description:"),
+            callback: (projectDescription) ->
+              name = projectName
+              description = projectDescription or ""
+              ctx.addModel.call(ctx, name, description)
+              return
+
+        else return
+  addModel: (name, description) ->
+    model = new App.Model({name, description})
+    App.projects.add model
 
   collectionEvents:
 

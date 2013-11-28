@@ -18,23 +18,39 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend({
   collection: App.projects,
   events: {
     "click .app-projects-footer > button.btn": function() {
-      var callback;
-      callback = function(val) {
-        return console.log(val);
-      };
-      return vex.dialog.prompt({
-        message: 'Concept Name:',
-        callback: function(value) {
-          callback(value);
-          if (value) {
-            return vex.dialog.prompt({
-              message: value + "\'s description:",
-              callback: callback
-            });
-          }
-        }
-      });
+      return this.createModelPrompt();
     }
+  },
+  createModelPrompt: function() {
+    var ctx, description, name;
+    ctx = this;
+    name = false;
+    description = "";
+    return vex.dialog.prompt({
+      message: 'Concept Name:',
+      callback: function(projectName) {
+        if (projectName) {
+          return vex.dialog.prompt({
+            message: projectName + "\'s description:",
+            callback: function(projectDescription) {
+              name = projectName;
+              description = projectDescription || "";
+              ctx.addModel.call(ctx, name, description);
+            }
+          });
+        } else {
+
+        }
+      }
+    });
+  },
+  addModel: function(name, description) {
+    var model;
+    model = new App.Model({
+      name: name,
+      description: description
+    });
+    return App.projects.add(model);
   },
   collectionEvents: {
     "add": function(model, collection) {

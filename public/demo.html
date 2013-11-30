@@ -79,16 +79,16 @@
 <!-- Templates -->
 
   <script id="app-item-template" type="text/template">
-    <li>
-      <h4 class="span4 ">
-        <a href ="">
+    <div class="app-projects-list-item">
+      <h4>
+        <a id="<%=name%>" href ="#<%=name%>">
           <%= name %>
         </a>
       </h4>
-      <div class="span2">
+      <div>
         <%= description %>
       </div>
-    </li>
+    </div>
   </script>
 
   <script id="ProjectList-template" type="text/template">
@@ -102,7 +102,7 @@
       <div>
       <div class="app-projects-footer">
 
-        <button class="btn btn-primary">
+        <button class="btn btn-primary simptip-position-bottom simptip-movable" data-tooltip="Create a new project">
           New Concept
         </button>
 

@@ -28,7 +28,6 @@ ul.app-projects-list li h1,
 ul.app-projects-list li h2,
 ul.app-projects-list li h3,
 ul.app-projects-list li h4 {
-	text-transform: uppercase;
 }
 ul.app-projects-list li div {
 	color:#666;

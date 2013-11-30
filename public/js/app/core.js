@@ -21,7 +21,7 @@ testData = function(numberOfModels) {
   console.warn("Model Creation");
   modelList = [];
   for (x = _i = 0, _ref = numberOfModels - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; x = 0 <= _ref ? ++_i : --_i) {
-    m = new App.Model({
+    m = new App.ProjectModel({
       name: "Model " + x,
       description: "just wow " + x
     });
@@ -36,27 +36,7 @@ $(document).ready(function() {
   console.log("Starting App");
   App.core.start();
   console.log("Adding test models");
-  testData(4);
   console.log(window.App);
-  console.log(App.projects);
-  console.log("%cwriting..", "font-weight:900");
-  /*
-  update = App.projects.sync "create", App.projects,
-    success: (a) -> 
-      console.log "success!" 
-    error: (a) -> 
-      console.log "not a success.."
-  */
-
-  console.log("%creading..", "font-weight:900");
-  /*
-  read = App.projects.sync "read", App.projects,
-    success: (a) -> 
-      console.log "success!" 
-    error: (a) -> 
-      console.log "not a success.."
-  */
-
   return console.log(App.projects);
 });
 

@@ -6,6 +6,9 @@ App.View.Item = Backbone.Marionette.ItemView.extend
   template: _.template $("#app-item-template").html()
   tagName: 'li'
   className: ''
+  events:
+    "click .app-projects-list-item": () ->
+      console.log "Todo: Open single Model"
 
 
 App.View.ProjectList = Backbone.Marionette.CompositeView.extend
@@ -44,16 +47,25 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
               return
 
         else return
+  editModelPrompt: () ->
+    #todo
+    console.log "editing"  
   addModel: (name, description) ->
-    model = new App.Model({name, description})
-    App.projects.add model
-
+    model = new App.ProjectModel({name, description})
+    @collection.add model
   collectionEvents:
 
     "add": (model, collection) ->
 
       name = model.get('name')
       console.log name + " added to collection"
+
+      model.save {},
+        success: (a) ->
+          console.log "and the model was saved."
+        error: (error) ->
+          console.warn "and the model was not saved."
+          console.error error
 
 
 

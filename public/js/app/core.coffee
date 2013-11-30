@@ -22,7 +22,7 @@ testData = (numberOfModels) ->
   console.warn "Model Creation"
   modelList = []
   for x in [0..(numberOfModels-1)]
-    m = new App.Model({
+    m = new App.ProjectModel({
       name: "Model " + x
       description: "just wow " + x
     })
@@ -43,25 +43,9 @@ $(document).ready ->
   App.core.start()
 
   console.log "Adding test models"
-  testData(4)
+  #testData(4)
   console.log window.App
   console.log(App.projects)
-  
-  console.log "%cwriting..", "font-weight:900"
-  ###
-  update = App.projects.sync "create", App.projects,
-    success: (a) -> 
-      console.log "success!" 
-    error: (a) -> 
-      console.log "not a success.." 
-  ###
-  console.log "%creading..", "font-weight:900"
-  ###
-  read = App.projects.sync "read", App.projects,
-    success: (a) -> 
-      console.log "success!" 
-    error: (a) -> 
-      console.log "not a success.." 
-  ###
-  console.log App.projects
+
+
 

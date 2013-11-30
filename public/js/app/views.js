@@ -5,7 +5,12 @@ App.View.Item = Backbone.Marionette.ItemView.extend({
   model: App.Model,
   template: _.template($("#app-item-template").html()),
   tagName: 'li',
-  className: ''
+  className: '',
+  events: {
+    "click .app-projects-list-item": function() {
+      return console.log("Todo: Open single Model");
+    }
+  }
 });
 
 App.View.ProjectList = Backbone.Marionette.CompositeView.extend({
@@ -44,19 +49,31 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend({
       }
     });
   },
+  editModelPrompt: function() {
+    return console.log("editing");
+  },
   addModel: function(name, description) {
     var model;
-    model = new App.Model({
+    model = new App.ProjectModel({
       name: name,
       description: description
     });
-    return App.projects.add(model);
+    return this.collection.add(model);
   },
   collectionEvents: {
     "add": function(model, collection) {
       var name;
       name = model.get('name');
-      return console.log(name + " added to collection");
+      console.log(name + " added to collection");
+      return model.save({}, {
+        success: function(a) {
+          return console.log("and the model was saved.");
+        },
+        error: function(error) {
+          console.warn("and the model was not saved.");
+          return console.error(error);
+        }
+      });
     }
   }
 });

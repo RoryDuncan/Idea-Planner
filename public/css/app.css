@@ -1,34 +1,45 @@
 
 .app-container {
-  padding: 50px 0px 25px 0px;
+  padding: 10px 0px 25px 0px;
   margin: 0px 0px 0px 0px;
 
 }
 
+.app-container a:link {
+	color: #0aa;
+	font-weight: 600;
+}
+.app-container a:visited {}
+.app-container a:active {}
+.app-container a:hover {}
+
+/* PROJECTS LIST */
 .app-projects-wrapper {
 	margin: 0 auto;
 	width: 100%;
 }
+.app-projects-header {
 
+}
+
+.app-projects-footer {
+	padding-top:15px;
+}
 
 .app-projects-list-wrapper {}
-ul.app-projects-list {
-	list-style-type: none;
-}
+
 ul.app-projects-list > li {
+	cursor: pointer;
 	margin: 0 0;
 	padding: 5px 0px 5px 25px;
-	border-left: 1px solid rgba(255,255,255,0);
 	border-bottom: 1px solid #f9f0ff;
 }
-ul.app-projects-list > li:hover {
-	border-left: 1px solid #242;
-}
+
 ul.app-projects-list li h1,
 ul.app-projects-list li h2,
 ul.app-projects-list li h3,
-ul.app-projects-list li h4 {
-}
+ul.app-projects-list li h4 {}
+
 ul.app-projects-list li div {
 	color:#666;
 }

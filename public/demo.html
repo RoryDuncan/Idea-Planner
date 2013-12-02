@@ -63,12 +63,11 @@
     </div>
 
     <div class="container">
-      
       <hr />
       <footer>
           <p>&copy; Rory Duncan 2013</p>
       </footer>
-    </div> <!-- /container -->
+    </div>
       
       <!-- ENABLE IN PRODUCTION
 
@@ -78,36 +77,64 @@
 
 <!-- Templates -->
 
-  <script id="app-item-template" type="text/template">
+  <script id="ProjectList-item-template" type="text/template">
     <div class="app-projects-list-item">
-      <h4>
-        <a id="<%=name%>" href ="#<%=name%>">
+      <h4 class="project-name">
+        <a id="<%=id%>" href ="#<%=id%>">
           <%= name %>
         </a>
       </h4>
-      <div>
+
+      <div class="project-description">
         <%= description %>
+      </div>
+
+      <div class="project-options-toggle text-right dropdown">
+        <button class="btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right text-center" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation"><a class="open" role="menuitem" tabindex="-1" href="#">Open</a></li>
+            <li role="presentation"><a class="edit" role="menuitem" tabindex="-1" href="#">Edit Settings</a></li>
+            <li role="presentation"><a class="share" role="menuitem" tabindex="-1" href="#">Link</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a class="delete" role="menuitem" tabindex="-1" href="#">Delete</a></li>
+        </ul>
       </div>
     </div>
   </script>
-
   <script id="ProjectList-template" type="text/template">
     <div class="app-projects-wrapper container">
-      <h1 class="app-projects-header"> Projects </h1>
+      <h1 class="app-projects-header simptip-position-right simptip-movable" data-tooltip="Your current endeavors">
+        Your Concepts 
+      </h1>
       <div class="app-projects-list-wrapper">
       <!-- todo: add emptyView -->
-        <ul class="app-projects-list">
+        <ul class="app-projects-list list-unstyled">
         
         </ul>
       <div>
       <div class="app-projects-footer">
 
-        <button class="btn btn-primary simptip-position-bottom simptip-movable" data-tooltip="Create a new project">
+        <button class="btn btn-primary">
           New Concept
         </button>
 
       </div>
     </div>
+  </script>
+  <script id="ProjectDeveloper-template" type="text/template">
+    <div class="app-project-wrapper" id="<%=id%>">
+      <div class="pull-left">
+        <h3><%= name %></h3>
+        <p class="text-muted"><%= description %></p>
+      </div>
+      <div class="pull-left">
+        <h3> Right Pane </h3>
+      </div>
+      <div class="clearfix"> </div>
+    </div>
+
   </script>
 <!-- End of Templates -->
 

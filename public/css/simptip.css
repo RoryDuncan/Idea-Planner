@@ -24,7 +24,7 @@
 }
 
 [data-tooltip]:after {
-  height: 22px;
+  height: 32px;
   padding: 11px 11px 0 11px;
   font-size: 13px;
   line-height: 11px;

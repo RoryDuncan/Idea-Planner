@@ -8,7 +8,7 @@ App.ProjectModel = Backbone.Model.extend({
     var id, name;
     name = this.get("name");
     name = name.replace(/ /g, "");
-    return id = "#" + name;
+    return id = name;
   }
 });
 

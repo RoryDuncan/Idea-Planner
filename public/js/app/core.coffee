@@ -13,7 +13,7 @@ core.addRegions
 # init
 core.addInitializer ->
   #instantiate a class
-  ProjectList = App.View.ProjectList
+  ProjectList = App.View.ProjectList # new keyword doesn't allow dot notation
   mainView = new ProjectList
   # show it
   core.AppContainer.show mainView

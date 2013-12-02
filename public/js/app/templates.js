@@ -4,18 +4,6 @@ App = window.App;
 
 App.Templates = {};
 
-App.Templates.ListedItem = function(model) {
-  var compiled, template;
-  template = $("#app-item-template").html();
-  console.log(template);
-  compiled = _.template(template, {
-    name: model.name,
-    description: model.description
-  });
-  console.log(compiled);
-  return compiled;
-};
-
 /*
   var data =   {site: 'NetTuts'},
       template =   'Welcome! You are at <%= site %>';

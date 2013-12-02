@@ -3,17 +3,58 @@ App.View = {}
 
 App.View.Item = Backbone.Marionette.ItemView.extend
   model: App.Model
-  template: _.template $("#app-item-template").html()
+  template: _.template $("#ProjectList-item-template").html()
   tagName: 'li'
   className: ''
   events:
-    "click .app-projects-list-item": () ->
-      console.log "Todo: Open single Model"
+    "click .app-projects-list-item .project-name": () ->
+      @openAsOwnView()
+    "click .app-projects-list-item ul.dropdown-menu li a.delete": ->
+      @deletePrompt()
+  openAsOwnView: () ->
+    clickedModel = @model
 
+    ProjectDeveloper = App.View.ProjectDeveloper # new keyword doesn't allow dot notation
+
+    singleModelView = new ProjectDeveloper
+      model: clickedModel
+    App.core.AppContainer.show singleModelView
+
+
+  deletePrompt: ->
+
+    ctx = @
+    name = @model.get "name"
+
+    namePrompt = (response) ->
+      if response
+        vex.dialog.prompt
+          message: ("Type in <span class='text-danger'>#{ name }</span> to delete it forever.")
+          callback: (projectname) ->
+            if projectname is name
+              vex.dialog.alert
+                message: "<span class='text-success'>#{ name } deleted.</span>"
+              ctx.deleteModel()
+
+      else return
+
+    # first dialogue for deleting the project
+    vex.dialog.confirm
+      message: "Are you sure you want to delete <span class='text-danger'>#{ name }</span>?",
+      callback: (response) ->
+        namePrompt(response)
+  deleteModel: ->
+    ctx = @
+    @model.destroy
+      success: ->
+        console.log "Model successfully destroyed."
+        ctx.render()
+      error: (err) ->
+        console.warn "Model was not destroyed."
+        console.error err
 
 App.View.ProjectList = Backbone.Marionette.CompositeView.extend
   tagName: "div"
-  id: "app-main"
   className: " "
   template: "#ProjectList-template" 
   itemView: App.View.Item
@@ -67,6 +108,9 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
           console.warn "and the model was not saved."
           console.error error
 
-
+App.View.ProjectDeveloper = Backbone.Marionette.ItemView.extend
+  model: App.Model
+  template: _.template $("#ProjectDeveloper-template").html()
+  tagName: "div"
 
 

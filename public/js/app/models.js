@@ -4,11 +4,19 @@ App.ProjectModel = Backbone.Model.extend({
     "name": "Untitled",
     "description": ""
   },
-  nameToId: function() {
-    var id, name;
+  nameURI: function() {
+    var name, uri;
     name = this.get("name");
-    name = name.replace(/ /g, "");
-    return id = name;
+    name = name.replace(/ /g, "_");
+    this.set("uri", name);
+    uri = this.get("uri");
+    console.log("uri created as", uri);
+    return uri;
+  },
+  initialize: function() {
+    if (this.get("name")) {
+      return this.nameURI();
+    }
   }
 });
 

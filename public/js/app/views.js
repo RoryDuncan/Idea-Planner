@@ -10,18 +10,29 @@ App.View.Item = Backbone.Marionette.ItemView.extend({
     "click .app-projects-list-item .project-name": function() {
       return this.openAsOwnView();
     },
+    "click .app-projects-list-item ul.dropdown-menu li a.open": function() {
+      return this.openAsOwnView();
+    },
     "click .app-projects-list-item ul.dropdown-menu li a.delete": function() {
       return this.deletePrompt();
     }
   },
   openAsOwnView: function() {
-    var ProjectDeveloper, clickedModel, singleModelView;
+    var clickedModel, uri;
     clickedModel = this.model;
-    ProjectDeveloper = App.View.ProjectDeveloper;
-    singleModelView = new ProjectDeveloper({
+    /*
+    ProjectDeveloper = App.View.ProjectDeveloper # new keyword doesn't allow dot notation
+    
+    singleModelView = new ProjectDeveloper
       model: clickedModel
+    App.core.AppContainer.show singleModelView
+    */
+
+    uri = clickedModel.get("uri");
+    return App.router.navigate("m/" + uri, {
+      trigger: true,
+      replace: true
     });
-    return App.core.AppContainer.show(singleModelView);
   },
   deletePrompt: function() {
     var ctx, name, namePrompt;

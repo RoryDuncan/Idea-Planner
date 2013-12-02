@@ -3,9 +3,17 @@ App.ProjectModel = Backbone.Model.extend
   "defaults":
     "name": "Untitled"
     "description": ""
-   nameToId: () ->
+
+   nameURI: () ->
 
     name = @get "name"
-    `name = name.replace(/ /g, "")`
-    id = name
+    `name = name.replace(/ /g, "_")`
+    @set "uri", name
+    uri = @get "uri"
+    console.log "uri created as", uri
+    return uri
+
+  initialize: ->
+    if @get "name"
+      @nameURI()
 

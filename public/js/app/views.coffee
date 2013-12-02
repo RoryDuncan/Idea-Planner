@@ -9,16 +9,24 @@ App.View.Item = Backbone.Marionette.ItemView.extend
   events:
     "click .app-projects-list-item .project-name": () ->
       @openAsOwnView()
+    "click .app-projects-list-item ul.dropdown-menu li a.open": () ->
+      @openAsOwnView()
     "click .app-projects-list-item ul.dropdown-menu li a.delete": ->
       @deletePrompt()
   openAsOwnView: () ->
-    clickedModel = @model
 
+    clickedModel = @model
+    ###
     ProjectDeveloper = App.View.ProjectDeveloper # new keyword doesn't allow dot notation
 
     singleModelView = new ProjectDeveloper
       model: clickedModel
     App.core.AppContainer.show singleModelView
+    ###
+    uri = clickedModel.get("uri")
+    App.router.navigate "m/#{uri}",
+      trigger: true
+      replace: true
 
 
   deletePrompt: ->

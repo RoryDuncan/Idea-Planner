@@ -57,7 +57,9 @@
         </div><!--/.navbar-collapse -->
       </div>
     </div>
+    <div class="app-breadcrumbs">
 
+    </div>
     <div class="app-container">
 
     </div>
@@ -79,21 +81,11 @@
 
   <script id="ProjectList-item-template" type="text/template">
     <div class="app-projects-list-item">
-      <h4 class="project-name">
-        <a id="<%=id%>" href ="#<%=id%>">
-          <%= name %>
-        </a>
-      </h4>
-
-      <div class="project-description">
-        <%= description %>
-      </div>
-
-      <div class="project-options-toggle text-right dropdown">
+      <div class="project-options-toggle pull-right dropdown">
         <button class="btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
           <span class="caret"></span>
         </button>
-        <ul class="dropdown-menu pull-right text-center" role="menu" aria-labelledby="dropdownMenu1">
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
             <li role="presentation"><a class="open" role="menuitem" tabindex="-1" href="#">Open</a></li>
             <li role="presentation"><a class="edit" role="menuitem" tabindex="-1" href="#">Edit Settings</a></li>
             <li role="presentation"><a class="share" role="menuitem" tabindex="-1" href="#">Link</a></li>
@@ -101,6 +93,16 @@
             <li role="presentation"><a class="delete" role="menuitem" tabindex="-1" href="#">Delete</a></li>
         </ul>
       </div>
+      <p class="project-name">
+          <a><%= name %></a>
+      </p>
+
+      <div href="#home" id="home" class="project-description">
+        <%= description %>
+      </div>
+
+      
+      <div class="clearfix"> </div>
     </div>
   </script>
   <script id="ProjectList-template" type="text/template">

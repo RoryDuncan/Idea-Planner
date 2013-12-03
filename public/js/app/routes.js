@@ -1,27 +1,41 @@
-var App, Router, log;
+var App, Breadcrumb, Router, clearBreadcrumb;
 
 App = window.App;
 
-log = function(action) {
-  return console.log("--> route: " + action);
-};
+Breadcrumb = (function() {
 
-Router = Backbone.Router.extend({
+  function Breadcrumb() {}
+
+  Breadcrumb.prototype.set = function(name) {
+    if ($('.app-breadcrumbs ol.breadcrumb li.active').length === 0) {
+      $('.app-breadcrumbs ol.breadcrumb').append("<li class='active'>&nbsp;</li>");
+    }
+    return $('.app-breadcrumbs ol.breadcrumb li.active').html(name);
+  };
+
+  Breadcrumb.prototype.reset = function() {
+    return $('.app-breadcrumbs ol.breadcrumb').html('<li><a href="#home">App Home</a></li>');
+  };
+
+  return Breadcrumb;
+
+})();
+
+clearBreadcrumb = Router = Backbone.Router.extend({
   routes: {
-    "home": "appRoot",
+    ":home": "appRoot",
     "m/:model": "modelByName"
   },
+  breadcrumb: new Breadcrumb(),
   appRoot: function(action) {
     var ProjectList, mainView;
-    log(action);
     ProjectList = App.View.ProjectList;
     mainView = new ProjectList;
     App.core.AppContainer.show(mainView);
+    this.breadcrumb.reset();
   },
   modelByName: function(uri) {
-    var ProjectDeveloper, model, singleModelView;
-    log("model " + uri);
-    console.log("viewing model with the uri of \"", uri, "\".");
+    var ProjectDeveloper, model, name, singleModelView;
     model = App.projects.findWhere({
       "uri": uri
     });
@@ -29,7 +43,10 @@ Router = Backbone.Router.extend({
     singleModelView = new ProjectDeveloper({
       "model": model
     });
-    return App.core.AppContainer.show(singleModelView);
+    App.core.AppContainer.show(singleModelView);
+    name = model.get("name");
+    console.log(this);
+    this.breadcrumb.set(name);
   }
 });
 

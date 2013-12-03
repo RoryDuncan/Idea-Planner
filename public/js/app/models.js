@@ -10,7 +10,6 @@ App.ProjectModel = Backbone.Model.extend({
     name = name.replace(/ /g, "_");
     this.set("uri", name);
     uri = this.get("uri");
-    console.log("uri created as", uri);
     return uri;
   },
   initialize: function() {

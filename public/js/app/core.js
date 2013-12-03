@@ -15,9 +15,12 @@ core.addInitializer(function() {
   ProjectList = App.View.ProjectList;
   mainView = new ProjectList;
   core.AppContainer.show(mainView);
-  return currentRoute = Backbone.history.start({
+  currentRoute = Backbone.history.start({
     pushState: false,
     root: "demo.html#"
+  });
+  return App.router.navigate("app/", {
+    trigger: true
   });
 });
 
@@ -26,7 +29,6 @@ App.core = core;
 $(document).ready(function() {
   console.log("Starting App");
   App.core.start();
-  console.log("Adding test models");
   return console.log(window.App);
 });
 

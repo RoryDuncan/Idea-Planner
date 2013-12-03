@@ -10,7 +10,6 @@ App.ProjectModel = Backbone.Model.extend
     `name = name.replace(/ /g, "_")`
     @set "uri", name
     uri = @get "uri"
-    console.log "uri created as", uri
     return uri
 
   initialize: ->

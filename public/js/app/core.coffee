@@ -25,6 +25,9 @@ core.addInitializer ->
     pushState: false
     root: "demo.html#"
 
+  App.router.navigate "app/",
+    trigger:true
+
 
 # namespacing
 App.core = core
@@ -34,8 +37,6 @@ $(document).ready ->
   
   console.log "Starting App"
   App.core.start()
-
-  console.log "Adding test models"
   console.log window.App
 
 

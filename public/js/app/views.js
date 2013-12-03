@@ -20,14 +20,6 @@ App.View.Item = Backbone.Marionette.ItemView.extend({
   openAsOwnView: function() {
     var clickedModel, uri;
     clickedModel = this.model;
-    /*
-    ProjectDeveloper = App.View.ProjectDeveloper # new keyword doesn't allow dot notation
-    
-    singleModelView = new ProjectDeveloper
-      model: clickedModel
-    App.core.AppContainer.show singleModelView
-    */
-
     uri = clickedModel.get("uri");
     return App.router.navigate("m/" + uri, {
       trigger: true,

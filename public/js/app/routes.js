@@ -1,4 +1,4 @@
-var App, Breadcrumb, Router, clearBreadcrumb;
+var App, Breadcrumb, Router;
 
 App = window.App;
 
@@ -14,25 +14,31 @@ Breadcrumb = (function() {
   };
 
   Breadcrumb.prototype.reset = function() {
-    return $('.app-breadcrumbs ol.breadcrumb').html('<li><a href="#home">App Home</a></li>');
+    return $('.app-breadcrumbs ol.breadcrumb').html('<li><a href="#app/">App Home</a></li>');
   };
 
   return Breadcrumb;
 
 })();
 
-clearBreadcrumb = Router = Backbone.Router.extend({
+Router = Backbone.Router.extend({
   routes: {
-    ":home": "appRoot",
+    ":action": "appRoot",
+    "app/": "appRoot",
     "m/:model": "modelByName"
   },
   breadcrumb: new Breadcrumb(),
+  toRoot: function() {
+    return App.router.navigate("app");
+  },
   appRoot: function(action) {
     var ProjectList, mainView;
+    console.log("app root");
     ProjectList = App.View.ProjectList;
     mainView = new ProjectList;
     App.core.AppContainer.show(mainView);
     this.breadcrumb.reset();
+    return this;
   },
   modelByName: function(uri) {
     var ProjectDeveloper, model, name, singleModelView;
@@ -47,6 +53,7 @@ clearBreadcrumb = Router = Backbone.Router.extend({
     name = model.get("name");
     console.log(this);
     this.breadcrumb.set(name);
+    return this;
   }
 });
 

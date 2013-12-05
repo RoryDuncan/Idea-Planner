@@ -55,6 +55,7 @@ App.View.Item = Backbone.Marionette.ItemView.extend
         console.warn "Model was not destroyed."
         console.error err
 
+
 App.View.ProjectList = Backbone.Marionette.CompositeView.extend
   tagName: "div"
   className: " "
@@ -110,9 +111,69 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
           console.warn "and the model was not saved."
           console.error error
 
-App.View.ProjectDeveloper = Backbone.Marionette.ItemView.extend
+
+App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
+  mode: "summary"
   model: App.Model
-  template: _.template $("#ProjectDeveloper-template").html()
-  tagName: "div"
+  className: "app-project-wrapper"
+  template: _.template $("#ProjectSummary-template").html()
+  events:
+    "click .toggletasks" : ->
+      @toggleTasks()
+    "click a.switch-edit" : ->
+      @changeMode "edit"
+    "click a.switch-summary" : ->
+      @changeMode "summary"
+  modelEvents:
+    "change": ->
+      @render()
+
+  onBeforeRender: ->
+    # default mode is summary
+    @mode = "summary" unless @mode
+    @loadEditView()
+
+  onBeforeClose: ->
+    #
+    @unloadEditView()
+
+  loadEditView: ->
+    ModuleSelector = App.View.ModuleSelector
+
+    modsel = new ModuleSelector
+      model: @model
+
+  unloadEditView: ->
+    #
+    App.core.ModuleSelectorContainer.hide
+
+  changeMode: (mode) ->
+    throw new Error("#{mode} is not a valid mode name. [Modes: 'edit', 'summary']") if mode is not "edit" or mode is not "summary"
+    @["mode:#{mode}"]()
+
+  mode:edit: ->
+    #
+    App.core.ModuleSelectorContainer.show modsel
+
+  mode:summary: ->
+    #
+    App.core.ModuleSelectorContainer.hide
+
+  toggleTasks: () ->
+    # this functionality might not be needed..
+    $('.tasks').toggle()
+
+  onRender: ->
+    #
+    $('.app-optionsbar').show()
+
+  onBeforeClose: ->
+    #
+    $('.app-optionsbar').hide()
+
+
+App.View.ModuleSelector = Backbone.Marionette.ItemView.extend
+  model: App.Model
+  template: _.template $("#ModuleSelector-template").html()
 
 

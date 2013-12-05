@@ -8,20 +8,19 @@ core.addRegions
   AppContainer: ".app-container"
   BreadCrumbs: ".app-breadcrumbs"
 
-  ListOfProjects: ".app-projects-list"
-  ListedHeader: ".app-projects-header"
-  ListedFooter: ".app-projects-footer"
+  ModuleSelectorContainer: ".app-modules-container"
 
-# init
+
+
 core.addInitializer ->
-  #instantiate a class
   
+  # show the main view listing the projects
   ProjectList = App.View.ProjectList # new keyword doesn't allow dot notation
   mainView = new ProjectList
-  # show it
+
   core.AppContainer.show mainView
   
-  currentRoute = Backbone.history.start
+  Backbone.history.start
     pushState: false
     root: "demo.html#"
 

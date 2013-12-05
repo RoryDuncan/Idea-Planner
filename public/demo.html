@@ -57,18 +57,21 @@
       </div>
     </div>
     <div class="app-breadcrumbs">
-      <ol class="breadcrumb">
+      <ol class="breadcrumb ">
         <li><a href="#app">App Home</a></li>
-    </ol>
+      </ol>
     </div>
-    <div class="app-container">
 
     </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="app-modules-container"> </div>
+    <div class="app-container"> </div>
+
+
 
     <div class="container">
-      <hr />
+      
       <footer>
-          <p>&copy; Rory Duncan 2013</p>
       </footer>
     </div>
       
@@ -94,51 +97,63 @@
             <li role="presentation"><a class="delete" role="menuitem" tabindex="-1" href="#">Delete</a></li>
         </ul>
       </div>
-      <p class="project-name">
-          <a><%= name %></a>
-      </p>
-
+      <h2 class="project-name">
+          <%= name %>
+      </h2>
       <div href="#home" id="home" class="project-description">
         <%= description %>
       </div>
-
-      
       <div class="clearfix"> </div>
     </div>
   </script>
+  
   <script id="ProjectList-template" type="text/template">
     <div class="app-projects-wrapper container">
-      <h1 class="app-projects-header simptip-position-right simptip-movable" data-tooltip="Your current endeavors">
-        Your Concepts 
-      </h1>
+      <p class="app-projects-header simptip-position-right simptip-movable" data-tooltip="Welcome, traveler.">
+        
+      </p>
       <div class="app-projects-list-wrapper">
-      <!-- todo: add emptyView -->
+        <!-- todo: add emptyView -->
         <ul class="app-projects-list list-unstyled">
         
         </ul>
       <div>
       <div class="app-projects-footer">
 
-        <button class="btn btn-primary">
-          New Concept
+        <button class="btn btn-success">
+          Create
         </button>
 
       </div>
     </div>
   </script>
-  <script id="ProjectDeveloper-template" type="text/template">
-    <div class="app-project-wrapper" id="<%=id%>">
-      <div class="pull-left">
-        <h3><%= name %></h3>
-        <p class="text-muted"><%= description %></p>
-      </div>
-      <div class="pull-left">
-        <h3> Right Pane </h3>
-      </div>
-      <div class="clearfix"> </div>
+
+  <script id="ProjectSummary-template" type="text/template">
+    <div class="app-optionsbar">
+      <a class="btn toggletasks simptip-position-bottom simptip-movable" data-tooltip="Toggle Menu"><span class="glyphicon glyphicon-tasks"></span></a>
+      <span class="tasks">
+        <a class="switch-edit simptip-position-bottom simptip-movable" data-tooltip="Add components to <%= name %>.">Edit</a>
+        <a class="switch-summary simptip-position-bottom simptip-movable" data-tooltip="View the summary of <%= name %>." >View</a>
+      </span>
     </div>
 
+    <div class="projecct-body container" id="<%=id%>">
+      <h1 class="project-title text-center"><%= name %>
+      </h1>
+      <p class="text-center"><%= description %></p>
+    </div>
+    <div class="clearfix">&nbsp;</div>
   </script>
+
+  <script id="ModuleSelector-template" type="text/template">
+    <div class="app-modulelist">
+      <p class="text-center">Modules</p>
+      <div class="clearfix">&nbsp;</div>
+    </div>
+  </script>
+
+
+
 <!-- End of Templates -->
 
       <script src="js/bundle.js"></script>

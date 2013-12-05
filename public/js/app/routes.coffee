@@ -3,7 +3,7 @@ App = window.App
 class Breadcrumb
   set: (name) ->
     if $('.app-breadcrumbs ol.breadcrumb li.active').length is 0
-      $('.app-breadcrumbs ol.breadcrumb').append "<li class='active'>&nbsp;</li>"
+      $('.app-breadcrumbs ol.breadcrumb').append "<li class='active'> </li>"
     $('.app-breadcrumbs ol.breadcrumb li.active').html name
   reset: () ->
     $('.app-breadcrumbs ol.breadcrumb').html '<li><a href="#app/">App Home</a></li>'
@@ -23,7 +23,6 @@ Router = Backbone.Router.extend
 
   appRoot: (action) ->
 
-    console.log "app root"
 
     ProjectList = App.View.ProjectList # new keyword doesn't allow dot notation
     mainView = new ProjectList
@@ -40,9 +39,9 @@ Router = Backbone.Router.extend
       "uri" : uri
 
 
-    ProjectDeveloper = App.View.ProjectDeveloper # new keyword doesn't allow dot notation
+    ProjectSummary = App.View.ProjectSummary # new keyword doesn't allow dot notation
 
-    singleModelView = new ProjectDeveloper
+    singleModelView = new ProjectSummary
       "model": model
     App.core.AppContainer.show singleModelView
 

@@ -5,17 +5,15 @@ core = new Backbone.Marionette.Application();
 core.addRegions({
   AppContainer: ".app-container",
   BreadCrumbs: ".app-breadcrumbs",
-  ListOfProjects: ".app-projects-list",
-  ListedHeader: ".app-projects-header",
-  ListedFooter: ".app-projects-footer"
+  ModuleSelectorContainer: ".app-modules-container"
 });
 
 core.addInitializer(function() {
-  var ProjectList, currentRoute, mainView;
+  var ProjectList, mainView;
   ProjectList = App.View.ProjectList;
   mainView = new ProjectList;
   core.AppContainer.show(mainView);
-  currentRoute = Backbone.history.start({
+  Backbone.history.start({
     pushState: false,
     root: "demo.html#"
   });

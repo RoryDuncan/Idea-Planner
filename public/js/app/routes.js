@@ -8,7 +8,7 @@ Breadcrumb = (function() {
 
   Breadcrumb.prototype.set = function(name) {
     if ($('.app-breadcrumbs ol.breadcrumb li.active').length === 0) {
-      $('.app-breadcrumbs ol.breadcrumb').append("<li class='active'>&nbsp;</li>");
+      $('.app-breadcrumbs ol.breadcrumb').append("<li class='active'> </li>");
     }
     return $('.app-breadcrumbs ol.breadcrumb li.active').html(name);
   };
@@ -33,7 +33,6 @@ Router = Backbone.Router.extend({
   },
   appRoot: function(action) {
     var ProjectList, mainView;
-    console.log("app root");
     ProjectList = App.View.ProjectList;
     mainView = new ProjectList;
     App.core.AppContainer.show(mainView);
@@ -41,12 +40,12 @@ Router = Backbone.Router.extend({
     return this;
   },
   modelByName: function(uri) {
-    var ProjectDeveloper, model, name, singleModelView;
+    var ProjectSummary, model, name, singleModelView;
     model = App.projects.findWhere({
       "uri": uri
     });
-    ProjectDeveloper = App.View.ProjectDeveloper;
-    singleModelView = new ProjectDeveloper({
+    ProjectSummary = App.View.ProjectSummary;
+    singleModelView = new ProjectSummary({
       "model": model
     });
     App.core.AppContainer.show(singleModelView);

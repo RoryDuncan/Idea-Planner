@@ -123,21 +123,21 @@
         <button class="btn btn-success">
           Create
         </button>
-
       </div>
     </div>
   </script>
 
   <script id="ProjectSummary-template" type="text/template">
     <div class="app-optionsbar">
-      <a class="btn toggletasks simptip-position-bottom simptip-movable" data-tooltip="Toggle Menu"><span class="glyphicon glyphicon-tasks"></span></a>
-      <span class="tasks">
-        <a class="switch-edit simptip-position-bottom simptip-movable" data-tooltip="Add components to <%= name %>.">Edit</a>
-        <a class="switch-summary simptip-position-bottom simptip-movable" data-tooltip="View the summary of <%= name %>." >View</a>
+      <a class="btn toggletasks simptip-position-bottom simptip-movable" data-tooltip="Menu"><span class="glyphicon glyphicon-tasks"></span></a>
+      <span class="menu tasks">
+        <a class="switch-edit simptip-position-bottom simptip-movable <%= isActiveMode('edit') %>" data-tooltip="Open in developer mode.">Edit</a>
+        <a class="switch-summary simptip-position-bottom simptip-movable <%= isActiveMode('summary') %>" data-tooltip="View the summary of <%= name %>." >Summary</a>
+
       </span>
     </div>
 
-    <div class="projecct-body container" id="<%=id%>">
+    <div class="project-body container" id="<%=id%>">
       <h1 class="project-title text-center"><%= name %>
       </h1>
       <p class="text-center"><%= description %></p>
@@ -145,10 +145,33 @@
     <div class="clearfix">&nbsp;</div>
   </script>
 
-  <script id="ModuleSelector-template" type="text/template">
-    <div class="app-modulelist">
-      <p class="text-center">Modules</p>
-      <div class="clearfix">&nbsp;</div>
+
+  <script id="ComponentSelector-template" type="text/template">
+    <div class="menu">
+      <a class="add-components">Add</a>
+      <a class="remove-components">Remove</a>
+      <a class="change-name">Name</a>
+      <a class="change-description">Description</a>
+    </div>
+    <div class="app-components-addmode">
+      <div class="app-components-list">
+        <h5 class="text-center">Component Types</h5>
+        <ul class="list-unstyled">
+          <li class=""> Wrapper </li>
+          <li class=""> Heading </li>
+          <li class=""> Text </li>
+          <li class=""> Resource </li>
+          <li class=""> Image </li>
+          <li class=""> Code Snippet </li>
+          <li class=""> Keywords</li>
+          <li class=""> Diagram </li>
+        </ul>
+      </div>
+      <div class="app-components-preview">
+        <h5 class="text-center">Component Preview</h5>
+      </div>
+        <div class="clearfix">&nbsp;</div>
+      </div>
     </div>
   </script>
 

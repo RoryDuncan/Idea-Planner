@@ -57,17 +57,102 @@ h1.project-title {
 	color:#666;
 }
 .app-optionsbar {
-	top: 87px;
+	top: 90px;
 	padding: 0px 10px 0px 10px;
 	position: absolute;
 	width: 100%;
-	border-bottom:1px solid #f5f5f5;
+	border-bottom:1px solid #eee;
+}
+.app-optionsbar .tasks {
+	
 }
 .app-optionsbar a {
 	margin: 0px 5px 0px 5px;
 }
 
-.tasks a {
+.menu > a {
+	margin: 0px 5px 0px 5px;
+}
+.menu {
+	color: #a99;
+}
+
+.menu > a:not(.active) {
 	cursor: pointer;
 }
+.menu > a.active {
+	cursor:default;
+	color: rgba(0,0,0,0.25) !important;
+}
+
+.app-components-wrapper {
+
+	display:none;
+	border-bottom:1px solid #eee;
+	padding: 0 0;
+	margin: 0 0;
+}
+
+.app-components-wrapper > .menu {
+	padding: 5px 5px 5px 10px;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 0px;
+}
+.app-components-wrapper > .menu a:first-child {
+	padding-left:15px;
+}
+.app-components-wrapper > .menu:before {
+	margin-top: 0px;
+	margin-left:10px;
+	color: #bbb;
+	font-size: 0.70em;
+	content: "OPTIONS";
+	/* content: "∟options:"; */
+}
+.app-components-wrapper > div h5 {
+	color: #ccc;
+	margin-bottom:5px;
+	padding:0px 10px 10px 10px;
+	font-size: 1em;
+}
+
+.app-components-addmode {
+	display: none;
+}
+
+.app-components-list {
+	min-width: 10%;
+	border-right: 1px solid #eee;
+	float:left;
+}
+
+.app-components-list ul li {
+	color: #428bca;
+	background-color:#fafafa;
+	padding: 6px 0px 6px 30px;
+	border-top:1px solid #eee;
+	cursor:pointer;
+}
+
+.app-components-list ul li:hover {
+	background-color: #f5f5f5;
+}
+
+.app-components-list ul li.active {
+	background-color: #fff;
+	border-right:5px solid #fff;
+	position: relative;
+	border-left: 1px solid #eee;
+	right:-1px;
+
+}
+
+.app-components-preview {
+	min-width: 50%;
+	float:left;
+}
+
+
+
+
 

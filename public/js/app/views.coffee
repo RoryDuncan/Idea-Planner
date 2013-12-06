@@ -117,51 +117,67 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
   model: App.Model
   className: "app-project-wrapper"
   template: _.template $("#ProjectSummary-template").html()
+  templateHelpers:
+    isActiveMode: (mode) ->
+      return "active" if mode is @mode
+    mode: ""
   events:
     "click .toggletasks" : ->
       @toggleTasks()
-    "click a.switch-edit" : ->
+    "click a.switch-edit:not(.active)" : ->
       @changeMode "edit"
-    "click a.switch-summary" : ->
+    "click a.switch-summary:not(.active)" : ->
       @changeMode "summary"
+
   modelEvents:
     "change": ->
       @render()
 
   onBeforeRender: ->
+    @templateHelpers.mode = @mode
     # default mode is summary
-    @mode = "summary" unless @mode
+    console.log "mode", @mode
+
     @loadEditView()
 
-  onBeforeClose: ->
+  onClose: ->
     #
+    console.log "wow"
     @unloadEditView()
 
   loadEditView: ->
-    ModuleSelector = App.View.ModuleSelector
+    ComponentSelector = App.View.ComponentSelector
 
-    modsel = new ModuleSelector
+    modsel = new ComponentSelector
       model: @model
+    @editor = modsel
 
   unloadEditView: ->
     #
-    App.core.ModuleSelectorContainer.hide
+    console.log "close pls"
+    App.core.ComponentSelectorContainer.close()
 
   changeMode: (mode) ->
     throw new Error("#{mode} is not a valid mode name. [Modes: 'edit', 'summary']") if mode is not "edit" or mode is not "summary"
-    @["mode:#{mode}"]()
+    modeMethod = @["mode:#{mode}"]
+    @mode = mode
+    $('.tasks a').removeClass "active"
+    $(".switch-#{mode}").addClass "active"
+    modeMethod.call(@)
 
-  mode:edit: ->
-    #
-    App.core.ModuleSelectorContainer.show modsel
 
-  mode:summary: ->
+  "mode:edit": ->
     #
-    App.core.ModuleSelectorContainer.hide
+    App.core.ComponentSelectorContainer.show @editor
+
+  "mode:summary": ->
+    #
+    App.core.ComponentSelectorContainer.close()
+
 
   toggleTasks: () ->
     # this functionality might not be needed..
-    $('.tasks').toggle()
+    $('.tasks').fadeToggle(100)
 
   onRender: ->
     #
@@ -172,8 +188,31 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     $('.app-optionsbar').hide()
 
 
-App.View.ModuleSelector = Backbone.Marionette.ItemView.extend
+App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
   model: App.Model
-  template: _.template $("#ModuleSelector-template").html()
+  template: _.template $("#ComponentSelector-template").html()
+  className: "app-components-wrapper"
+  events:
+    "click .add-components": ->
+      @toggleComponents()
+
+  initialize: ->
+
+  toggleComponents: ->
+    $('.app-components-addmode').slideToggle "fast"
+  toggleWrapper: ->
+    $(".app-components-wrapper").slideToggle "fast"
+    #$(".app-components-preview").slideToggle("fast")
+
+    
+  onBeforeRender: ->
+    ctx = @
+    App.core.ComponentSelectorContainer.onShow = ->
+      ctx.toggleWrapper();
+
+  onBeforeClose: ->
+    @toggleWrapper()
+    App.core.ComponentSelectorContainer.onShow = ->
+      #
 
 

@@ -5,7 +5,7 @@ core = new Backbone.Marionette.Application();
 core.addRegions({
   AppContainer: ".app-container",
   BreadCrumbs: ".app-breadcrumbs",
-  ModuleSelectorContainer: ".app-modules-container"
+  ComponentSelectorContainer: ".app-modules-container"
 });
 
 core.addInitializer(function() {

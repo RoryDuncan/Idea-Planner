@@ -164,25 +164,23 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     }
   },
   onBeforeRender: function() {
-    this.templateHelpers.mode = this.mode;
-    console.log("mode", this.mode);
-    return this.loadEditView();
+    return this.templateHelpers.mode = this.mode;
   },
   onClose: function() {
-    console.log("wow");
     return this.unloadEditView();
   },
   loadEditView: function() {
-    var ComponentSelector, modsel;
+    var ComponentSelector, editor, modsel;
     ComponentSelector = App.View.ComponentSelector;
     modsel = new ComponentSelector({
       model: this.model
     });
-    return this.editor = modsel;
+    editor = modsel;
+    return editor;
   },
   unloadEditView: function() {
     console.log("close pls");
-    return App.core.ComponentSelectorContainer.close();
+    return this["mode:summary"].call();
   },
   changeMode: function(mode) {
     var modeMethod;
@@ -195,11 +193,17 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     $(".switch-" + mode).addClass("active");
     return modeMethod.call(this);
   },
-  "mode:edit": function() {
-    return App.core.ComponentSelectorContainer.show(this.editor);
+  mode: {
+    edit: function() {
+      var view;
+      view = this.loadEditView();
+      return App.core.ComponentSelectorContainer.show(view);
+    }
   },
-  "mode:summary": function() {
-    return App.core.ComponentSelectorContainer.close();
+  mode: {
+    summary: function() {
+      return App.core.ComponentSelectorContainer.close();
+    }
   },
   toggleTasks: function() {
     return $('.tasks').fadeToggle(100);
@@ -221,7 +225,6 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend({
       return this.toggleComponents();
     }
   },
-  initialize: function() {},
   toggleComponents: function() {
     return $('.app-components-addmode').slideToggle("fast");
   },

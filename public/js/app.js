@@ -30,10 +30,11 @@ var Backbone = require('backbone');
 var marionette = require('backbone.marionette');
 
 window.App = new Application();
-var templates = require('./app/templates.js');
+
 var models = require('./app/models.js');
 var collections = require('./app/collections.js');
 var views = require('./app/views.js');
 var routes = require('./app/routes.js');
+var components = require('./app/components.js');
 var core = require('./app/core.js');
 

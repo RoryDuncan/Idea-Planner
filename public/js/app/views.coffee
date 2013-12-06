@@ -136,13 +136,9 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
   onBeforeRender: ->
     @templateHelpers.mode = @mode
     # default mode is summary
-    console.log "mode", @mode
-
-    @loadEditView()
 
   onClose: ->
     #
-    console.log "wow"
     @unloadEditView()
 
   loadEditView: ->
@@ -150,12 +146,13 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
 
     modsel = new ComponentSelector
       model: @model
-    @editor = modsel
+    editor = modsel
+    return editor
 
   unloadEditView: ->
     #
     console.log "close pls"
-    App.core.ComponentSelectorContainer.close()
+    @["mode:summary"].call()
 
   changeMode: (mode) ->
     throw new Error("#{mode} is not a valid mode name. [Modes: 'edit', 'summary']") if mode is not "edit" or mode is not "summary"
@@ -165,17 +162,17 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     $(".switch-#{mode}").addClass "active"
     modeMethod.call(@)
 
+  mode:edit: ->
 
-  "mode:edit": ->
-    #
-    App.core.ComponentSelectorContainer.show @editor
+    view = @loadEditView()
+    App.core.ComponentSelectorContainer.show view
 
-  "mode:summary": ->
+  mode:summary: ->
     #
     App.core.ComponentSelectorContainer.close()
 
-
   toggleTasks: () ->
+
     # this functionality might not be needed..
     $('.tasks').fadeToggle(100)
 
@@ -196,13 +193,11 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
     "click .add-components": ->
       @toggleComponents()
 
-  initialize: ->
-
   toggleComponents: ->
     $('.app-components-addmode').slideToggle "fast"
+
   toggleWrapper: ->
     $(".app-components-wrapper").slideToggle "fast"
-    #$(".app-components-preview").slideToggle("fast")
 
     
   onBeforeRender: ->
@@ -213,6 +208,6 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
   onBeforeClose: ->
     @toggleWrapper()
     App.core.ComponentSelectorContainer.onShow = ->
-      #
+      # clear onShow
 
 

@@ -3,6 +3,7 @@ App.ProjectModel = Backbone.Model.extend
   "defaults":
     "name": "Untitled"
     "description": ""
+    "components": []
 
    nameURI: () ->
 

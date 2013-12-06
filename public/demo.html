@@ -84,97 +84,107 @@
 <!-- Templates -->
 
   <script id="ProjectList-item-template" type="text/template">
-    <div class="app-projects-list-item">
-      <div class="project-options-toggle pull-right dropdown">
-        <button class="btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
-            <li role="presentation"><a class="open" role="menuitem" tabindex="-1" href="#">Open</a></li>
-            <li role="presentation"><a class="edit" role="menuitem" tabindex="-1" href="#">Edit Settings</a></li>
-            <li role="presentation"><a class="share" role="menuitem" tabindex="-1" href="#">Link</a></li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation"><a class="delete" role="menuitem" tabindex="-1" href="#">Delete</a></li>
-        </ul>
+      <div class="app-projects-list-item">
+        <div class="project-options-toggle pull-right dropdown">
+          <button class="btn" id="dLabel" role="button" data-toggle="dropdown" data-target="#">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="presentation"><a class="open" role="menuitem" tabindex="-1" href="#">Open</a></li>
+              <li role="presentation"><a class="edit" role="menuitem" tabindex="-1" href="#">Edit Settings</a></li>
+              <li role="presentation"><a class="share" role="menuitem" tabindex="-1" href="#">Link</a></li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation"><a class="delete" role="menuitem" tabindex="-1" href="#">Delete</a></li>
+          </ul>
+        </div>
+        <h2 class="project-name">
+            <%= name %>
+        </h2>
+        <div href="#home" id="home" class="project-description">
+          <%= description %>
+        </div>
+        <div class="clearfix"> </div>
       </div>
-      <h2 class="project-name">
-          <%= name %>
-      </h2>
-      <div href="#home" id="home" class="project-description">
-        <%= description %>
-      </div>
-      <div class="clearfix"> </div>
-    </div>
   </script>
   
   <script id="ProjectList-template" type="text/template">
-    <div class="app-projects-wrapper container">
-      <p class="app-projects-header simptip-position-right simptip-movable" data-tooltip="Welcome, traveler.">
-        
-      </p>
-      <div class="app-projects-list-wrapper">
-        <!-- todo: add emptyView -->
-        <ul class="app-projects-list list-unstyled">
-        
-        </ul>
-      <div>
-      <div class="app-projects-footer">
+      <div class="app-projects-wrapper container">
+        <p class="app-projects-header simptip-position-right simptip-movable" data-tooltip="Welcome, traveler.">
+          
+        </p>
+        <div class="app-projects-list-wrapper">
+          <!-- todo: add emptyView -->
+          <ul class="app-projects-list list-unstyled">
+          
+          </ul>
+        <div>
+        <div class="app-projects-footer">
 
-        <button class="btn btn-success">
-          Create
-        </button>
+          <button class="btn btn-success">
+            Create
+          </button>
+        </div>
       </div>
-    </div>
   </script>
 
   <script id="ProjectSummary-template" type="text/template">
-    <div class="app-optionsbar">
-      <a class="btn toggletasks simptip-position-bottom simptip-movable" data-tooltip="Menu"><span class="glyphicon glyphicon-tasks"></span></a>
-      <span class="menu tasks">
-        <a class="switch-edit simptip-position-bottom simptip-movable <%= isActiveMode('edit') %>" data-tooltip="Open in developer mode.">Edit</a>
-        <a class="switch-summary simptip-position-bottom simptip-movable <%= isActiveMode('summary') %>" data-tooltip="View the summary of <%= name %>." >Summary</a>
+      <div class="app-optionsbar">
+        <a class="btn toggletasks simptip-position-bottom simptip-movable" data-tooltip="Menu"><span class="glyphicon glyphicon-tasks"></span></a>
+        <span class="menu tasks">
+          <a class="switch-edit simptip-position-bottom simptip-movable <%= isActiveMode('edit') %>" data-tooltip="Open in developer mode.">Edit</a>
+          <a class="switch-summary simptip-position-bottom simptip-movable <%= isActiveMode('summary') %>" data-tooltip="View the summary of <%= name %>." >Summary</a>
 
-      </span>
-    </div>
+        </span>
+      </div>
 
-    <div class="project-body container" id="<%=id%>">
-      <h1 class="project-title text-center"><%= name %>
-      </h1>
-      <p class="text-center"><%= description %></p>
-    </div>
-    <div class="clearfix">&nbsp;</div>
+      <div class="project-body container" id="<%=id%>">
+        <h1 class="project-title text-center"><%= name %>
+        </h1>
+        <p class="text-center"><%= description %></p>
+      </div>
+      <div class="clearfix">&nbsp;</div>
   </script>
-
 
   <script id="ComponentSelector-template" type="text/template">
-    <div class="menu">
-      <a class="add-components">Add</a>
-      <a class="remove-components">Remove</a>
-      <a class="change-name">Name</a>
-      <a class="change-description">Description</a>
-    </div>
-    <div class="app-components-addmode">
-      <div class="app-components-list">
-        <h5 class="text-center">Component Types</h5>
-        <ul class="list-unstyled">
-          <li class=""> Wrapper </li>
-          <li class=""> Heading </li>
-          <li class=""> Text </li>
-          <li class=""> Resource </li>
-          <li class=""> Image </li>
-          <li class=""> Code Snippet </li>
-          <li class=""> Keywords</li>
-          <li class=""> Diagram </li>
-        </ul>
+      <div class="menu">
+        <a class="add-components">Add<span class="caret"> </span></a>
+        <a class="remove-components">Remove</a>
+        <a class="change-name">Name</a>
+        <a class="change-description">Description</a>
       </div>
-      <div class="app-components-preview">
-        <h5 class="text-center">Component Preview</h5>
+      <div class="app-components-addmode">
+        <div class="app-components-list">
+          <h5 class="text-center">Component Types</h5>
+          <ul class="list-unstyled">
+            <li class=""> Wrapper </li>
+            <li class=""> Heading </li>
+            <li class=""> Text </li>
+            <li class=""> Resource </li>
+            <li class=""> Image </li>
+            <li class=""> Code Snippet </li>
+            <li class=""> Keywords</li>
+            <li class=""> Diagram </li>
+          </ul>
+        </div>
+        <div class="app-components-preview">
+          <h5 class="text-center">Component Preview</h5>
+        </div>
+          <div class="clearfix">&nbsp;</div>
+        </div>
       </div>
-        <div class="clearfix">&nbsp;</div>
-      </div>
-    </div>
   </script>
-
+  <!-- Component templates -->
+  <script id="Component-Text"   type="text/template">
+      <div class="component component-text">
+        <%= information %>
+      </div>
+  </script>
+  <script id="Component-Header" type="text/template"></script>
+  <script id="Component-Link"   type="text/template"></script>
+  <script id="Component-Image"   type="text/template"></script>
+  <script id="Component-CodeSnippet"   type="text/template"></script>
+  <script id="Component-Keyword"   type="text/template"></script>
+  <script id="Component-Diagram"   type="text/template"></script>
 
 
 <!-- End of Templates -->

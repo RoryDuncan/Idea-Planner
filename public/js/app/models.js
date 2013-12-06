@@ -2,7 +2,8 @@
 App.ProjectModel = Backbone.Model.extend({
   "defaults": {
     "name": "Untitled",
-    "description": ""
+    "description": "",
+    "components": []
   },
   nameURI: function() {
     var name, uri;

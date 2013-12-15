@@ -142,6 +142,15 @@ p.project-description  {
 	display:inline-block;
 
 }
+.app-components-list ul:before {
+	margin-top: 0px;
+	margin-left:10px;
+	margin-right:10px;
+	color: #ccc;
+	font-size: 0.70em;
+	text-transform: uppercase;
+	content: "Component Types";
+}
 
 .app-components-list ul li {
 	margin: 0 0;
@@ -187,13 +196,23 @@ p.project-description  {
 
 .project-components > .component > span:nth-of-type(1) {
 	padding: 10px 10px 10px 10px;
-	
+
 
 }
-.project-components > .component > span:nth-of-type(2) input {
+.project-components > .component > span:nth-of-type(2) div {
+	position: relative;
+	font-size: 0.85em;
+	background-color: #fff !important;
+	font-weight:600;
+	top:-20px;
+	left:5%;
+	height:0px;
+}
+.project-components > .component > span:nth-of-type(2) textarea {
 	border:none;
-	padding: 10px 10px;
+	padding: 8px 8px;
 	width: 100%;
+	white-space: pre-wrap;
 }
 
 /**************** switch states ****************/
@@ -225,11 +244,11 @@ p.project-description  {
 	left:0px;
 	bottom:0px;
 	color: #ddd;
-	font-size:0.9em;
+	font-size:1.3em;
 	background-color: #363636;
 	border-top:1px solid #444;
 	display: none;
-	padding: 15px 10px 10px 10px;
+	padding: 8px 10px 0px 10px;
 }
 
 .edit-component-menu ul {
@@ -251,11 +270,8 @@ p.project-description  {
 }
 
 
+}
+.save-progress {
+border:2px solid #f00;
 
-
-
-
-
-
-
-
+}

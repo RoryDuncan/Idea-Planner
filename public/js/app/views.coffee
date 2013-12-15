@@ -134,10 +134,33 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
       @selectComponent(id)
       @showComponentOptions(id)
 
+    "click .edit-component-menu ul li.delete": () ->
+      @["component:delete"]()
+
+    "keypress .watching": (e) ->
+      console.log "--"
+      $(".edit-component-menu li.save-progress").text("Saving Changes...")
+      if e.which is 13
+        @["component:update"]()
+        console.log "score!"
+
+
+      @proxySave()
+
+
+
   modelEvents:
     "change": ->
-      @render() unless @mode is "edit"
+      @render()
 
+  initialize: ->
+
+    @proxySave = _.debounce @saveComponent, 5000
+
+  saveComponent: ->
+    console.log "proxied"
+
+    @["component:update"]()
   loadEditView: ->
     ComponentSelector = App.View.ComponentSelector
 
@@ -238,19 +261,62 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     return if id is $('.edit-component-menu').attr('id')
 
     # apply classes
+    @currentlySelectedComponent = id
+
     $(".component").removeClass("selected")
+    $(".component textarea").removeClass("watching")
     $("##{id}").addClass("selected")
-    $(".selected").find("input").first().focus()
+
+    @selectComponentTypeBranching()
+
+  selectComponentTypeBranching: () ->
+
+    text = ->
+      $(".selected textarea").addClass("watching")
+      $(".selected textarea").focus()
+      return "text"
+
+    type = switch
+      when $(".selected").is(".component-text") then text()
+      when $(".selected").is(".component-header") then "header"
+      when $(".selected").is(".component-resource") then "resource"
+      when $(".selected").is(".component-wrapper") then "wrapper"
+      when $(".selected").is(".component-image") then "image"
+      when $(".selected").is(".component-code") then "code"
+      when $(".selected").is(".component-diagram") then "diagram"
+      else "header"
+
+    console.log "Selected a", type
 
   unselectComponents: () ->
-
+    $(".component input").removeClass("watching")
     $(".component").removeClass("selected")
+    @currentlySelectedComponent = null
     @closeComponentOptions()
 
   closeComponentOptions: () ->
     
     $(".edit-component-menu").hide()
     $('.edit-component-menu').attr('id', "");
+
+  "component:delete": () ->
+    ctx = @
+    vex.dialog.confirm
+      message: "Are you sure you want to delete this <span class='text-danger'>component</span>?",
+      callback: (response) ->
+        return unless response
+        id = ctx.currentlySelectedComponent
+        ctx.model.removeComponent(id)
+  
+  "component:update": () ->
+
+    
+    console.log "saving component", @currentlySelectedComponent
+    @model
+    $(".edit-component-menu li.save-progress").text("Saved")
+    _.delay ->
+      $(".edit-component-menu li.save-progress").text("Save All")
+    , 2000
 
   toggleTasks: () ->
 
@@ -264,9 +330,17 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
   onRender: ->
 
     $('.app-optionsbar').show()
-    # pass in true to bulk rendering
-    render = @renderComponents
-    _.defer render, true, @ 
+
+    #for the onAfterRender event
+    afterRender = @onAfterRender
+    ctx = @
+    _.defer ->
+      afterRender.apply(ctx)
+
+  onAfterRender: (scope) ->
+
+    @renderComponents true, @
+    @changeMode @mode
 
   onModeChange: ->
     #
@@ -288,8 +362,8 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
       @toggleComponentsList()
     "click .app-components-list ul li": (e) ->
 
-      name = e.currentTarget.classList[0]
-      @createComponent name.toLowerCase()
+      type = e.currentTarget.classList[0]
+      @createComponent type.toLowerCase()
 
   createComponent: (type) ->
 

@@ -160,14 +160,31 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
       id = e.currentTarget.id;
       this.selectComponent(id);
       return this.showComponentOptions(id);
+    },
+    "click .edit-component-menu ul li.delete": function() {
+      return this["component:delete"]();
+    },
+    "keypress .watching": function(e) {
+      console.log("--");
+      $(".edit-component-menu li.save-progress").text("Saving Changes...");
+      if (e.which === 13) {
+        this["component:update"]();
+        console.log("score!");
+      }
+      return this.proxySave();
     }
   },
   modelEvents: {
     "change": function() {
-      if (this.mode !== "edit") {
-        return this.render();
-      }
+      return this.render();
     }
+  },
+  initialize: function() {
+    return this.proxySave = _.debounce(this.saveComponent, 5000);
+  },
+  saveComponent: function() {
+    console.log("proxied");
+    return this["component:update"]();
   },
   loadEditView: function() {
     var ComponentSelector, editor, modsel;
@@ -264,17 +281,73 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     if (id === $('.edit-component-menu').attr('id')) {
       return;
     }
+    this.currentlySelectedComponent = id;
     $(".component").removeClass("selected");
+    $(".component textarea").removeClass("watching");
     $("#" + id).addClass("selected");
-    return $(".selected").find("input").first().focus();
+    return this.selectComponentTypeBranching();
+  },
+  selectComponentTypeBranching: function() {
+    var text, type;
+    text = function() {
+      $(".selected textarea").addClass("watching");
+      $(".selected textarea").focus();
+      return "text";
+    };
+    type = (function() {
+      switch (false) {
+        case !$(".selected").is(".component-text"):
+          return text();
+        case !$(".selected").is(".component-header"):
+          return "header";
+        case !$(".selected").is(".component-resource"):
+          return "resource";
+        case !$(".selected").is(".component-wrapper"):
+          return "wrapper";
+        case !$(".selected").is(".component-image"):
+          return "image";
+        case !$(".selected").is(".component-code"):
+          return "code";
+        case !$(".selected").is(".component-diagram"):
+          return "diagram";
+        default:
+          return "header";
+      }
+    })();
+    return console.log("Selected a", type);
   },
   unselectComponents: function() {
+    $(".component input").removeClass("watching");
     $(".component").removeClass("selected");
+    this.currentlySelectedComponent = null;
     return this.closeComponentOptions();
   },
   closeComponentOptions: function() {
     $(".edit-component-menu").hide();
     return $('.edit-component-menu').attr('id', "");
+  },
+  "component:delete": function() {
+    var ctx;
+    ctx = this;
+    return vex.dialog.confirm({
+      message: "Are you sure you want to delete this <span class='text-danger'>component</span>?",
+      callback: function(response) {
+        var id;
+        if (!response) {
+          return;
+        }
+        id = ctx.currentlySelectedComponent;
+        return ctx.model.removeComponent(id);
+      }
+    });
+  },
+  "component:update": function() {
+    console.log("saving component", this.currentlySelectedComponent);
+    this.model;
+    $(".edit-component-menu li.save-progress").text("Saved");
+    return _.delay(function() {
+      return $(".edit-component-menu li.save-progress").text("Save All");
+    }, 2000);
   },
   toggleTasks: function() {
     return $('.tasks').fadeToggle(100);
@@ -283,10 +356,17 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     return this.templateHelpers.mode = this.mode;
   },
   onRender: function() {
-    var render;
+    var afterRender, ctx;
     $('.app-optionsbar').show();
-    render = this.renderComponents;
-    return _.defer(render, true, this);
+    afterRender = this.onAfterRender;
+    ctx = this;
+    return _.defer(function() {
+      return afterRender.apply(ctx);
+    });
+  },
+  onAfterRender: function(scope) {
+    this.renderComponents(true, this);
+    return this.changeMode(this.mode);
   },
   onModeChange: function() {
     return this.updateComponentStyles();
@@ -307,9 +387,9 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend({
       return this.toggleComponentsList();
     },
     "click .app-components-list ul li": function(e) {
-      var name;
-      name = e.currentTarget.classList[0];
-      return this.createComponent(name.toLowerCase());
+      var type;
+      type = e.currentTarget.classList[0];
+      return this.createComponent(type.toLowerCase());
     }
   },
   createComponent: function(type) {

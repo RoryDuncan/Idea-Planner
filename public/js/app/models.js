@@ -26,7 +26,16 @@ App.ProjectModel = Backbone.Model.extend({
   "defaults": {
     "name": "Untitled",
     "description": "",
+    "com_length": 0,
     "components": []
+  },
+  initialize: function() {
+    if (this.get("name")) {
+      this.nameURI();
+    }
+    if (!this.has("com_length")) {
+      return this.set("com_length", 0);
+    }
   },
   nameURI: function() {
     var name, uri;
@@ -65,10 +74,11 @@ App.ProjectModel = Backbone.Model.extend({
     }
     return false;
   },
-  newComponent: function(attributes) {
+  _newComponent: function(attributes) {
     var c, list, modelId;
     modelId = this.get("id");
-    list = this.get("components").length;
+    list = this.get("com_length");
+    list += 1;
     Component = App.ComponentModel;
     attributes = _.extend({
       "parent": modelId,
@@ -78,25 +88,26 @@ App.ProjectModel = Backbone.Model.extend({
     return c;
   },
   addComponent: function(attributes) {
-    var component, list;
-    component = this.newComponent(attributes);
+    var component, l, list;
+    component = this._newComponent(attributes);
+    l = (this.get("com_length")) + 1;
     list = this.get("components");
     list.push(component);
+    this.set("com_length", l);
     this.set("components", list);
     return this.save();
   },
   removeComponent: function(id) {
     var index, list, plucked;
+    console.warn("removing component", id);
     list = this.get("components");
+    console.log(list);
     plucked = _.pluck(list, "id");
     index = _.indexOf(plucked, id);
     list = _.without(list, list[index]);
-    return console.log(list);
-  },
-  initialize: function() {
-    if (this.get("name")) {
-      return this.nameURI();
-    }
+    this.set("components", list);
+    console.log("updating?");
+    return this.save();
   }
 });
 

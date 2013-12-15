@@ -105,9 +105,7 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend({
       }
     });
   },
-  editModelPrompt: function() {
-    return console.log("editing");
-  },
+  editModelPrompt: function() {},
   addModel: function(name, description) {
     var model;
     model = new App.ProjectModel({
@@ -156,18 +154,20 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     },
     "click a.switch-summary:not(.active)": function() {
       return this.changeMode("summary");
+    },
+    "click .editing:not(.selected)": function(e) {
+      var id;
+      id = e.currentTarget.id;
+      this.selectComponent(id);
+      return this.showComponentOptions(id);
     }
   },
   modelEvents: {
     "change": function() {
-      return this.render();
+      if (this.mode !== "edit") {
+        return this.render();
+      }
     }
-  },
-  onBeforeRender: function() {
-    return this.templateHelpers.mode = this.mode;
-  },
-  onClose: function() {
-    return this.unloadEditView();
   },
   loadEditView: function() {
     var ComponentSelector, editor, modsel;
@@ -179,8 +179,47 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     return editor;
   },
   unloadEditView: function() {
-    console.log("close pls");
-    return this["mode:summary"].call();
+    return this["mode:summary"]();
+  },
+  renderComponents: function(bulk, scope) {
+    var compile, compiled, list, render;
+    if (!scope.model.hasComponents()) {
+      return;
+    }
+    list = scope.model.components();
+    if (list.length === 0) {
+      return;
+    }
+    $("div.project-components").text("");
+    compiled = "";
+    render = function() {
+      $("div.project-components").append(compiled);
+      return compiled = " ";
+    };
+    compile = function(component) {
+      var html, type;
+      type = component.type;
+      type = type.split("");
+      type[0] = type[0].toUpperCase();
+      type = type.join("");
+      return html = _.template($("#Component-" + type).html(), component);
+    };
+    if (bulk === true) {
+      _.forEach(list, function(c) {
+        var html;
+        html = compile(c);
+        return compiled += html;
+      });
+      return render();
+    } else {
+      return _.forEach(list, function(c) {
+        var html;
+        html = compile(c);
+        compiled += html;
+        render();
+        return compiled = " ";
+      });
+    }
   },
   changeMode: function(mode) {
     var modeMethod;
@@ -191,28 +230,70 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     this.mode = mode;
     $('.tasks a').removeClass("active");
     $(".switch-" + mode).addClass("active");
-    return modeMethod.call(this);
+    modeMethod.call(this);
+    return this.onModeChange();
   },
-  mode: {
-    edit: function() {
-      var view;
-      view = this.loadEditView();
-      return App.core.ComponentSelectorContainer.show(view);
+  "mode:edit": function() {
+    var view;
+    view = this.loadEditView();
+    return App.core.ComponentSelectorContainer.show(view);
+  },
+  "mode:summary": function() {
+    this.unselectComponents();
+    return App.core.ComponentSelectorContainer.close();
+  },
+  updateComponentStyles: function() {
+    var editStyles, summaryStyles;
+    editStyles = function() {
+      return $(".component").addClass('editing');
+    };
+    summaryStyles = function() {
+      return $(".component").removeClass('editing');
+    };
+    if (this.mode === "summary") {
+      return summaryStyles();
+    } else if (this.mode === "edit") {
+      return editStyles();
     }
   },
-  mode: {
-    summary: function() {
-      return App.core.ComponentSelectorContainer.close();
+  showComponentOptions: function(id) {
+    $(".edit-component-menu").slideDown();
+    return $('.edit-component-menu').attr('id', id);
+  },
+  selectComponent: function(id) {
+    if (id === $('.edit-component-menu').attr('id')) {
+      return;
     }
+    $(".component").removeClass("selected");
+    $("#" + id).addClass("selected");
+    return $(".selected").find("input").first().focus();
+  },
+  unselectComponents: function() {
+    $(".component").removeClass("selected");
+    return this.closeComponentOptions();
+  },
+  closeComponentOptions: function() {
+    $(".edit-component-menu").hide();
+    return $('.edit-component-menu').attr('id', "");
   },
   toggleTasks: function() {
     return $('.tasks').fadeToggle(100);
   },
-  onRender: function() {
-    return $('.app-optionsbar').show();
+  onBeforeRender: function() {
+    return this.templateHelpers.mode = this.mode;
   },
-  onBeforeClose: function() {
-    return $('.app-optionsbar').hide();
+  onRender: function() {
+    var render;
+    $('.app-optionsbar').show();
+    render = this.renderComponents;
+    return _.defer(render, true, this);
+  },
+  onModeChange: function() {
+    return this.updateComponentStyles();
+  },
+  onClose: function() {
+    $('.app-optionsbar').hide();
+    return this.unloadEditView();
   }
 });
 
@@ -220,12 +301,28 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend({
   model: App.Model,
   template: _.template($("#ComponentSelector-template").html()),
   className: "app-components-wrapper",
+  $preview: $('.app-components-preview'),
   events: {
     "click .add-components": function() {
-      return this.toggleComponents();
+      return this.toggleComponentsList();
+    },
+    "click .app-components-list ul li": function(e) {
+      var name;
+      name = e.currentTarget.classList[0];
+      return this.createComponent(name.toLowerCase());
     }
   },
-  toggleComponents: function() {
+  createComponent: function(type) {
+    var attributes;
+    attributes = {
+      "type": type
+    };
+    return this.model.addComponent(attributes);
+  },
+  saveComponents: function() {
+    return console.log("wow");
+  },
+  toggleComponentsList: function() {
     return $('.app-components-addmode').slideToggle("fast");
   },
   toggleWrapper: function() {
@@ -238,6 +335,7 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend({
       return ctx.toggleWrapper();
     };
   },
+  onRender: function() {},
   onBeforeClose: function() {
     this.toggleWrapper();
     return App.core.ComponentSelectorContainer.onShow = function() {};

@@ -93,7 +93,6 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
         else return
   editModelPrompt: () ->
     #todo
-    console.log "editing"  
   addModel: (name, description) ->
     model = new App.ProjectModel({name, description})
     @collection.add model
@@ -121,6 +120,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     isActiveMode: (mode) ->
       return "active" if mode is @mode
     mode: ""
+
   events:
     "click .toggletasks" : ->
       @toggleTasks()
@@ -129,17 +129,14 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     "click a.switch-summary:not(.active)" : ->
       @changeMode "summary"
 
+    "click .editing:not(.selected)": (e) ->
+      id = e.currentTarget.id
+      @selectComponent(id)
+      @showComponentOptions(id)
+
   modelEvents:
     "change": ->
-      @render()
-
-  onBeforeRender: ->
-    @templateHelpers.mode = @mode
-    # default mode is summary
-
-  onClose: ->
-    #
-    @unloadEditView()
+      @render() unless @mode is "edit"
 
   loadEditView: ->
     ComponentSelector = App.View.ComponentSelector
@@ -151,8 +148,49 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
 
   unloadEditView: ->
     #
-    console.log "close pls"
-    @["mode:summary"].call()
+    @["mode:summary"]()
+
+  renderComponents: (bulk, scope) ->
+    return unless scope.model.hasComponents()
+    list = scope.model.components()
+    return if list.length is 0
+    $("div.project-components").text("")
+    #compile into a a single HTML string since DOM manipulation is costly.
+    #'bulk' argument to control this.
+    compiled = ""
+
+    render = () ->
+      $("div.project-components").append compiled
+      compiled = " "
+
+    compile = (component) ->
+
+      # capitilize the first letter, since that's the scheme used for the templating
+      type = component.type
+      type = type.split("")
+      type[0] = type[0].toUpperCase()
+      type = type.join("")
+
+      return html = _.template $("#Component-#{type}").html(), component
+
+    if bulk is true
+      
+      _.forEach list, (c) ->
+        html = compile c
+        compiled += html
+
+      # renders 'compiled' after it's fully compiled
+      render()
+
+    else
+
+      _.forEach list, (c) ->
+        html = compile c
+        compiled += html
+        # renders 'compiled' after each step of compiling,
+        render()
+        #then clears (to not exponentially grow)
+        compiled = " "
 
   changeMode: (mode) ->
     throw new Error("#{mode} is not a valid mode name. [Modes: 'edit', 'summary']") if mode is not "edit" or mode is not "summary"
@@ -161,39 +199,107 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     $('.tasks a').removeClass "active"
     $(".switch-#{mode}").addClass "active"
     modeMethod.call(@)
+    @onModeChange()
 
-  mode:edit: ->
+  "mode:edit": ->
 
     view = @loadEditView()
     App.core.ComponentSelectorContainer.show view
 
-  mode:summary: ->
+  "mode:summary": ->
     #
+    @unselectComponents()
     App.core.ComponentSelectorContainer.close()
+
+  updateComponentStyles: ->
+    #updateComponentStyles is based on the current mode
+
+    editStyles = ->
+      $(".component").addClass('editing')
+
+    summaryStyles = ->
+      $(".component").removeClass('editing')
+
+
+    if @mode is "summary"
+      summaryStyles()
+      # additional styling options can be added here.
+    else if @mode is "edit"
+      editStyles()
+      # additional styling options can be added here.
+
+  showComponentOptions: (id) ->
+
+    $(".edit-component-menu").slideDown()
+    $('.edit-component-menu').attr('id', id);
+
+  selectComponent: (id) ->
+
+    return if id is $('.edit-component-menu').attr('id')
+
+    # apply classes
+    $(".component").removeClass("selected")
+    $("##{id}").addClass("selected")
+    $(".selected").find("input").first().focus()
+
+  unselectComponents: () ->
+
+    $(".component").removeClass("selected")
+    @closeComponentOptions()
+
+  closeComponentOptions: () ->
+    
+    $(".edit-component-menu").hide()
+    $('.edit-component-menu').attr('id', "");
 
   toggleTasks: () ->
 
     # this functionality might not be needed..
     $('.tasks').fadeToggle(100)
+      
+  onBeforeRender: ->
+
+    @templateHelpers.mode = @mode
 
   onRender: ->
-    #
-    $('.app-optionsbar').show()
 
-  onBeforeClose: ->
+    $('.app-optionsbar').show()
+    # pass in true to bulk rendering
+    render = @renderComponents
+    _.defer render, true, @ 
+
+  onModeChange: ->
     #
+    @updateComponentStyles()
+    
+  onClose: ->
+    
     $('.app-optionsbar').hide()
+    @unloadEditView()
 
 
 App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
   model: App.Model
   template: _.template $("#ComponentSelector-template").html()
   className: "app-components-wrapper"
+  $preview: $('.app-components-preview')
   events:
     "click .add-components": ->
-      @toggleComponents()
+      @toggleComponentsList()
+    "click .app-components-list ul li": (e) ->
 
-  toggleComponents: ->
+      name = e.currentTarget.classList[0]
+      @createComponent name.toLowerCase()
+
+  createComponent: (type) ->
+
+    attributes =
+      "type": type
+    @model.addComponent attributes
+  saveComponents: () ->
+    console.log "wow"
+
+  toggleComponentsList: ->
     $('.app-components-addmode').slideToggle "fast"
 
   toggleWrapper: ->
@@ -204,6 +310,9 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
     ctx = @
     App.core.ComponentSelectorContainer.onShow = ->
       ctx.toggleWrapper();
+
+  onRender: ->
+    #console.log @model.components()
 
   onBeforeClose: ->
     @toggleWrapper()

@@ -1,3 +1,26 @@
+var App, Component;
+
+App = window.App;
+
+App.ComponentModel = Component = (function() {
+
+  function Component(attributes) {
+    _.extend(this, this.defaults);
+    _.extend(this, attributes);
+    console.log("component model:", this);
+  }
+
+  Component.prototype.defaults = {
+    "type": "text",
+    "text": "[empty]",
+    "url": "[empty]",
+    "description": "[empty]",
+    "title": "[empty]"
+  };
+
+  return Component;
+
+})();
 
 App.ProjectModel = Backbone.Model.extend({
   "defaults": {
@@ -12,6 +35,63 @@ App.ProjectModel = Backbone.Model.extend({
     this.set("uri", name);
     uri = this.get("uri");
     return uri;
+  },
+  components: function() {
+    return this.get("components");
+  },
+  isSorted: function() {
+    var list;
+    list = this.components();
+    if (_.has(list[0], "order")) {
+      return true;
+    }
+    return false;
+  },
+  getComponent: function(filter) {
+    var criteria, list, result, search;
+    list = this.get("components");
+    criteria = _.keys(filter);
+    search = _.values(filter);
+    result = _.find(list, function(element, index, list) {
+      return element[criteria] === search;
+    });
+    return console.log(result);
+  },
+  hasComponents: function() {
+    var components;
+    components = this.get("components");
+    if (components.length !== 0) {
+      return true;
+    }
+    return false;
+  },
+  newComponent: function(attributes) {
+    var c, list, modelId;
+    modelId = this.get("id");
+    list = this.get("components").length;
+    Component = App.ComponentModel;
+    attributes = _.extend({
+      "parent": modelId,
+      "id": "com_" + list
+    }, attributes);
+    c = new Component(attributes);
+    return c;
+  },
+  addComponent: function(attributes) {
+    var component, list;
+    component = this.newComponent(attributes);
+    list = this.get("components");
+    list.push(component);
+    this.set("components", list);
+    return this.save();
+  },
+  removeComponent: function(id) {
+    var index, list, plucked;
+    list = this.get("components");
+    plucked = _.pluck(list, "id");
+    index = _.indexOf(plucked, id);
+    list = _.without(list, list[index]);
+    return console.log(list);
   },
   initialize: function() {
     if (this.get("name")) {

@@ -137,11 +137,23 @@
         </span>
       </div>
 
-      <div class="project-body container" id="<%=id%>">
-        <h1 class="project-title text-center"><%= name %>
-        </h1>
-        <p class="text-center"><%= description %></p>
+      <div class="project-body" id="<%=id%>">
+        <div class="project-jumbotron">
+          <h1 class="project-title"><%= name %>
+          </h1>
+          <p class="project-description"><%= description %></p>
+        </div>
+      
+        <div class="project-components">
+          Nothing here, captain!
+        </div>
       </div>
+      <div id="" class="edit-component-menu">
+        <ul class="list-unstyled">
+          <li>Edit Text</li>
+          <li class="delete">Delete</li>
+        </ul>
+      </div> 
       <div class="clearfix">&nbsp;</div>
   </script>
 
@@ -154,29 +166,26 @@
       </div>
       <div class="app-components-addmode">
         <div class="app-components-list">
-          <h5 class="text-center">Component Types</h5>
+          <h5 class="">Component Types</h5>
           <ul class="list-unstyled">
-            <li class=""> Wrapper </li>
-            <li class=""> Heading </li>
-            <li class=""> Text </li>
-            <li class=""> Resource </li>
-            <li class=""> Image </li>
-            <li class=""> Code Snippet </li>
-            <li class=""> Keywords</li>
-            <li class=""> Diagram </li>
+            <li class="Wrapper disabled" todo-data-tooltip="For grouping other components">Wrapper</li>
+            <li class="Heading" todo-data-tooltip="A basic text heading.">Heading</li>
+            <li class="Text" todo-data-tooltip="A basic text field.">Text</li>
+            <li class="Resource " todo-data-tooltip="A link / URL to another site.">Resource</li>
+            <li class="Image disabled" todo-data-tooltip="A .jpg/.png/.gif file.">Image</li>
+            <li class="Code disabled" todo-data-tooltip="A few lines of code using ACE editor.">Code Snippet</li>
+            <li class="Diagram disabled" todo-data-tooltip="A diagram for displaying flow or structure.">Diagram</li>
           </ul>
-        </div>
-        <div class="app-components-preview">
-          <h5 class="text-center">Component Preview</h5>
-        </div>
-          <div class="clearfix">&nbsp;</div>
         </div>
       </div>
   </script>
   <!-- Component templates -->
-  <script id="Component-Text"   type="text/template">
-      <div class="component component-text">
-        <%= information %>
+
+  <script id="Component-Text"  type="text/template">
+      <div id="<%= id %>" class="component component-text">
+
+        <span> <%= text %> </span>
+        <span><input type="text" component-id="<%= id %>" value="<%= text %>" /> </span>
       </div>
   </script>
   <script id="Component-Header" type="text/template"></script>
@@ -185,6 +194,7 @@
   <script id="Component-CodeSnippet"   type="text/template"></script>
   <script id="Component-Keyword"   type="text/template"></script>
   <script id="Component-Diagram"   type="text/template"></script>
+
 
 
 <!-- End of Templates -->

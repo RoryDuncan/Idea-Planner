@@ -56,15 +56,22 @@ App.ProjectModel = Backbone.Model.extend({
     }
     return false;
   },
+  getIndexOfComponent: function(id) {
+    var index, list, plucked;
+    list = this.get("components");
+    plucked = _.pluck(list, "id");
+    index = _.indexOf(plucked, id);
+    return index;
+  },
   getComponent: function(filter) {
     var criteria, list, result, search;
     list = this.get("components");
-    criteria = _.keys(filter);
-    search = _.values(filter);
+    criteria = _.keys(filter)[0];
+    search = _.values(filter)[0];
     result = _.find(list, function(element, index, list) {
       return element[criteria] === search;
     });
-    return console.log(result);
+    return result;
   },
   hasComponents: function() {
     var components;
@@ -99,15 +106,37 @@ App.ProjectModel = Backbone.Model.extend({
   },
   removeComponent: function(id) {
     var index, list, plucked;
-    console.warn("removing component", id);
     list = this.get("components");
-    console.log(list);
     plucked = _.pluck(list, "id");
     index = _.indexOf(plucked, id);
     list = _.without(list, list[index]);
     this.set("components", list);
-    console.log("updating?");
     return this.save();
+  },
+  setComponent: function(id, newData) {
+    var c, callbax, index, list, oldComponent;
+    list = this.get("components");
+    oldComponent = this.getComponent({
+      "id": id
+    });
+    if (!oldComponent) {
+      return;
+    }
+    c = _.extend(oldComponent, newData);
+    index = this.getIndexOfComponent(id);
+    list[index] = c;
+    this.set("components", list);
+    callbax = {
+      error: function(e) {
+        console.warn("Component did not save:", e);
+        return $(".edit-component-menu li.save-progress").text("Oops! Did Not Save!");
+      },
+      success: function() {
+        return $(".edit-component-menu li.save-progress").text("Saved.");
+      }
+    };
+    console.log("saving..");
+    return this.save({}, callbax);
   }
 });
 

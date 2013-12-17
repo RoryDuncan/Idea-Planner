@@ -35,7 +35,11 @@ App.ProjectModel = Backbone.Model.extend
     uri = @get "uri"
     return uri
 
+  # Methods for interacting with components #
+
+
   components: ->
+    # simple alias
     return @get "components"
 
   isSorted: ->
@@ -44,15 +48,25 @@ App.ProjectModel = Backbone.Model.extend
     #else
     return false
 
+  getIndexOfComponent: (id) ->
+    list = @get "components"
+    #shrink into a simple array (plucked)
+    plucked = _.pluck list, "id"
+    index = _.indexOf plucked, id
+    return index
+
   getComponent: (filter) ->
 
     list = @get "components"
-    criteria = _.keys filter
-    search = _.values filter
+    criteria = _.keys(filter)[0]
+    search = _.values(filter)[0]
+
     result = _.find list, (element, index, list) ->
+
       return element[criteria] is search
 
-    console.log result
+
+    return result
 
   hasComponents: ->
     components = @get("components")
@@ -85,15 +99,46 @@ App.ProjectModel = Backbone.Model.extend
     @save()
 
   removeComponent: (id) ->
-    console.warn "removing component", id
+
     list = @get "components"
-    console.log list
     plucked = _.pluck list, "id"
     index = _.indexOf plucked, id
     list = _.without list, list[index]
     @set "components", list
-    console.log "updating?"
+
     @save()
-    
+  
+  setComponent: (id, newData) ->
+
+    list = @get "components"
+    oldComponent = @getComponent({"id":id})
+
+    return unless oldComponent
+
+    #merge old component and new data, using newData as source
+    c = _.extend oldComponent, newData
+
+
+    index = @getIndexOfComponent id
+    #update list with new extended component
+    list[index] = c
+
+    #update the model
+    @set "components", list
+    callbax = 
+      error: (e) ->
+        console.warn "Component did not save:", e
+        $(".edit-component-menu li.save-progress").text("Oops! Did Not Save!")
+      success: ->
+        $(".edit-component-menu li.save-progress").text("Saved.")
+
+
+    console.log "saving.."
+    @save({}, callbax)
+
+
+
+
+
 
 

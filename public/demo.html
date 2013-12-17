@@ -150,7 +150,8 @@
         <ul class="list-unstyled">
           <li></li>
           <li class="delete">Delete</li>
-          <li class="save-progress">Save All</li>
+          <li class="unselect">&times;</li>
+          <li class="save-progress">     </li>
         </ul>
       </div> 
       <div class="clearfix">&nbsp;</div>
@@ -181,9 +182,8 @@
 
   <script id="Component-Text"  type="text/template">
       <div id="<%= id %>" class="component component-text">
-        <span> <%= text %> </span>
-        <span><textarea component-id="<%= id %>" ><%= text %></textarea></span>
-        <div class="save-progress"> </div>
+        <span><%= text %></span>
+        <span><textarea spellcheck="true" component-id="<%= id %>" ><%= text %></textarea></span>
       </div>
   </script>
   <script id="Component-Header" type="text/template"></script>

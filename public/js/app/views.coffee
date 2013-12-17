@@ -137,30 +137,31 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     "click .edit-component-menu ul li.delete": () ->
       @["component:delete"]()
 
-    "keypress .watching": (e) ->
-      console.log "--"
-      $(".edit-component-menu li.save-progress").text("Saving Changes...")
-      if e.which is 13
-        @["component:update"]()
-        console.log "score!"
+    "click .edit-component-menu ul li.unselect": () ->
+      # appears visually as a "close" X
+      @unselectComponents()
 
+    "keypress .watching": (e) ->
+      # the functionality for saving on keypress. if they press return, save immedietly
+      $(".edit-component-menu li.save-progress").text("Saving...")
 
       @proxySave()
 
 
 
   modelEvents:
-    "change": ->
+    "newcomponent": ->
+      console.log "triggered"
       @render()
 
   initialize: ->
 
-    @proxySave = _.debounce @saveComponent, 5000
+    @proxySave = _.debounce @saveComponent, 2000
 
   saveComponent: ->
-    console.log "proxied"
-
+    # proxied version of @["component:update"](), as well as easier to reference
     @["component:update"]()
+
   loadEditView: ->
     ComponentSelector = App.View.ComponentSelector
 
@@ -190,6 +191,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
 
       # capitilize the first letter, since that's the scheme used for the templating
       type = component.type
+
       type = type.split("")
       type[0] = type[0].toUpperCase()
       type = type.join("")
@@ -261,7 +263,8 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     return if id is $('.edit-component-menu').attr('id')
 
     # apply classes
-    @currentlySelectedComponent = id
+    @selected =
+      "id": id
 
     $(".component").removeClass("selected")
     $(".component textarea").removeClass("watching")
@@ -270,6 +273,9 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     @selectComponentTypeBranching()
 
   selectComponentTypeBranching: () ->
+
+    # method for visual selection and type setting for later use
+    # each type should have a function corrosponding
 
     text = ->
       $(".selected textarea").addClass("watching")
@@ -284,14 +290,14 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
       when $(".selected").is(".component-image") then "image"
       when $(".selected").is(".component-code") then "code"
       when $(".selected").is(".component-diagram") then "diagram"
-      else "header"
+      else text()
 
-    console.log "Selected a", type
+    @selected.type = type
 
   unselectComponents: () ->
     $(".component input").removeClass("watching")
     $(".component").removeClass("selected")
-    @currentlySelectedComponent = null
+    @selected = {}
     @closeComponentOptions()
 
   closeComponentOptions: () ->
@@ -305,19 +311,57 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
       message: "Are you sure you want to delete this <span class='text-danger'>component</span>?",
       callback: (response) ->
         return unless response
-        id = ctx.currentlySelectedComponent
+        id = ctx.selected.id
         ctx.model.removeComponent(id)
   
   "component:update": () ->
 
-    
-    console.log "saving component", @currentlySelectedComponent
-    @model
-    $(".edit-component-menu li.save-progress").text("Saved")
-    _.delay ->
-      $(".edit-component-menu li.save-progress").text("Save All")
-    , 2000
+    # get the value of text
+    val = @getTypeData @selected.type
+    id = @selected.id
 
+    # then save the model
+    @model.setComponent(id, val)
+
+    #capture original color
+
+    _.delay ->
+      $(".edit-component-menu li.save-progress").text(" ")
+    , 3000
+
+  getTypeData: (type) ->
+    # each type will have a different DOM structure and a variable amount
+    # of inputs to get values from. This method will use the current type to discern and get
+    # the necessary values
+    type = @selected.type unless type
+
+    text = ->
+      v = 
+        "text" : $(".watching").val()
+      return v
+
+    image = ->
+      v = 
+        "url" : $(".watching").val()
+      return v
+
+    resource = ->
+      return
+
+    # todo: the rest of the value-getters
+
+    value = switch
+      when type is "text" then text()
+      when type is "header" then text()
+      when type is "resource" then resource()
+      when type is "wrapper" then "wrapper"
+      when type is "image" then "image"
+      when type is "code" then "code"
+      when type is "diagram" then "diagram"
+      else "text"
+
+    return value
+  
   toggleTasks: () ->
 
     # this functionality might not be needed..
@@ -370,8 +414,7 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
     attributes =
       "type": type
     @model.addComponent attributes
-  saveComponents: () ->
-    console.log "wow"
+    @model.trigger "newcomponent"
 
   toggleComponentsList: ->
     $('.app-components-addmode').slideToggle "fast"

@@ -16569,6 +16569,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     },
     "click .editing:not(.selected)": function(e) {
       var id;
+      this.renderOnComponentBlur();
       id = e.currentTarget.id;
       this.selectComponent(id);
       return this.showComponentOptions(id);
@@ -16580,18 +16581,17 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
       return this.unselectComponents();
     },
     "keypress .watching": function(e) {
-      $(".edit-component-menu li.save-progress").text("Saving...");
+      $(".edit-component-menu li.save-progress").html("Saving...");
       return this.proxySave();
     }
   },
   modelEvents: {
     "newcomponent": function() {
-      console.log("triggered");
       return this.render();
     }
   },
   initialize: function() {
-    return this.proxySave = _.debounce(this.saveComponent, 2000);
+    return this.proxySave = _.debounce(this.saveComponent, 600);
   },
   saveComponent: function() {
     return this["component:update"]();
@@ -16648,6 +16648,29 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
       });
     }
   },
+  renderSingleComponent: function(id) {
+    var compile, component, selector;
+    if (!id) {
+      return;
+    }
+    component = this.model.getComponent({
+      "id": id
+    });
+    compile = function() {
+      var html, type;
+      type = component.type;
+      type = type.split("");
+      type[0] = type[0].toUpperCase();
+      type = type.join("");
+      return html = _.template($("#Component-" + type).html(), component);
+    };
+    if (id[0] === "#") {
+      id = id.split("#")[1];
+    }
+    selector = "#" + id;
+    $(selector).replaceWith(compile);
+    return $(selector).addClass("editing");
+  },
   changeMode: function(mode) {
     var modeMethod;
     if (mode === !"edit" || mode === !"summary") {
@@ -16699,6 +16722,12 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     $("#" + id).addClass("selected");
     return this.selectComponentTypeBranching();
   },
+  renderOnComponentBlur: function() {
+    if (!this.selected.id) {
+      return;
+    }
+    return this.renderSingleComponent(this.selected.id);
+  },
   selectComponentTypeBranching: function() {
     var text, type;
     text = function() {
@@ -16736,7 +16765,8 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
   },
   closeComponentOptions: function() {
     $(".edit-component-menu").hide();
-    return $('.edit-component-menu').attr('id', "");
+    $('.edit-component-menu').attr('id', "");
+    return this.renderComponents(true, this);
   },
   "component:delete": function() {
     var ctx;

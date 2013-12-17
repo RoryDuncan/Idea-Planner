@@ -219,7 +219,8 @@ p.project-description  {
 
 .project-components > .component > span:nth-of-type(1) {
 	padding: 10px 10px 10px 10px;
-	white-space: pre-wrap;
+	white-space: pre;
+	height: 100%;
 
 
 }
@@ -291,6 +292,9 @@ p.project-description  {
 .edit-component-menu ul li.unselect {font-size:2em; float: right; position:relative; bottom:10px;}
 
 .edit-component-menu ul li.delete {	color: #a44;}
+
+.edit-component-menu ul li.save-progress {	min-width: 20%;}
+.edit-component-menu ul li.save-progress > span {opacity: 0.5; font-weight:900;}
 
 .edit-component-menu ul li.delete:hover {color: #c44;}
 

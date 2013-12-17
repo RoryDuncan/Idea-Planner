@@ -130,6 +130,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
       @changeMode "summary"
 
     "click .editing:not(.selected)": (e) ->
+      @renderOnComponentBlur()
       id = e.currentTarget.id
       @selectComponent(id)
       @showComponentOptions(id)
@@ -142,24 +143,21 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
       @unselectComponents()
 
     "keypress .watching": (e) ->
+      $(".edit-component-menu li.save-progress").html("Saving...")
       # the functionality for saving on keypress. if they press return, save immedietly
-      $(".edit-component-menu li.save-progress").text("Saving...")
-
       @proxySave()
-
-
 
   modelEvents:
     "newcomponent": ->
-      console.log "triggered"
       @render()
 
   initialize: ->
 
-    @proxySave = _.debounce @saveComponent, 2000
+    @proxySave = _.debounce @saveComponent, 600
 
   saveComponent: ->
-    # proxied version of @["component:update"](), as well as easier to reference
+
+    # proxied version of @["component:update"](), as well as easier to reference    vis = (time) ->
     @["component:update"]()
 
   loadEditView: ->
@@ -217,6 +215,30 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
         #then clears (to not exponentially grow)
         compiled = " "
 
+  renderSingleComponent: (id) ->
+    return unless id
+    component = @model.getComponent({"id":id})
+
+    compile = ->
+      
+      type = component.type
+
+      type = type.split("")
+      type[0] = type[0].toUpperCase()
+      type = type.join("")
+
+      return html = _.template $("#Component-#{type}").html(), component
+
+
+    if id[0] is "#"
+      id = id.split("#")[1]
+    
+    selector = "##{id}"
+    # replace the current
+    $(selector).replaceWith compile
+    # normally renders in "summary mode", so add 'editing' class
+    $(selector).addClass "editing"
+  
   changeMode: (mode) ->
     throw new Error("#{mode} is not a valid mode name. [Modes: 'edit', 'summary']") if mode is not "edit" or mode is not "summary"
     modeMethod = @["mode:#{mode}"]
@@ -272,6 +294,10 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
 
     @selectComponentTypeBranching()
 
+  renderOnComponentBlur: () ->
+    return unless @selected.id
+    @renderSingleComponent @selected.id
+
   selectComponentTypeBranching: () ->
 
     # method for visual selection and type setting for later use
@@ -301,9 +327,9 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     @closeComponentOptions()
 
   closeComponentOptions: () ->
-    
     $(".edit-component-menu").hide()
     $('.edit-component-menu').attr('id', "");
+    @renderComponents true, @
 
   "component:delete": () ->
     ctx = @

@@ -10,6 +10,9 @@
 
 /*! normalize.css v2.1.0 | MIT License | git.io/normalize */
 
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic);
+
+
 article,
 aside,
 details,
@@ -48,6 +51,7 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
 }
 
 a:focus {
@@ -300,7 +304,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -4199,6 +4203,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-toggle {
+
   position: relative;
   float: right;
   padding: 9px 10px;
@@ -4211,6 +4216,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-toggle .icon-bar {
+
   display: block;
   width: 22px;
   height: 2px;
@@ -4219,6 +4225,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
+
 }
 
 @media (min-width: 768px) {
@@ -4355,6 +4362,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-btn {
+
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -4373,7 +4381,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: #fff;
   border-color: #e7e7e7;
 }
 
@@ -4425,7 +4433,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #cccccc;
+  background-color: #ccc;
 }
 
 .navbar-default .navbar-collapse,
@@ -4542,7 +4550,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #ffffff;
+  background-color: #000;
 }
 
 .navbar-inverse .navbar-collapse,
@@ -4923,7 +4931,7 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background-color: #eeeeee;
+  background-color: #fff;
 }
 
 .jumbotron h1 {

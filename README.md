@@ -1,4 +1,4 @@
-sproutIO
+Idea Planner
 ========
 
-Idea management tool
+A idea planner web-app using backbone.js, marionnette, and backbone.localStorage.

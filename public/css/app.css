@@ -1,0 +1,325 @@
+
+
+.app-container {
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  min-height: 450px;
+
+}
+
+.app-container a:link {
+	color: #0aa;
+	font-weight: 600;
+}
+.app-container a:visited {}
+.app-container a:active {}
+.app-container a:hover {}
+
+/* PROJECTS LIST */
+.app-projects-wrapper {
+	margin: 0 auto;
+	width: 100%;
+}
+
+.project-name {
+	color:#002;
+}
+
+
+.app-projects-footer {
+	padding-top:15px;
+}
+
+.app-projects-list-wrapper {}
+
+ul.app-projects-list > li {
+	cursor: pointer;
+	margin: 0 0;
+	padding: 8px 0px 8px 8px;
+	
+}
+
+ul.app-projects-list li h1,
+ul.app-projects-list li h2,
+ul.app-projects-list li h3,
+ul.app-projects-list li h4 {}
+
+ul.app-projects-list li div {
+	color:#666;
+}
+
+.app-projects-list-item:hover {
+	background-color:rgba(0,0,0,0.01);
+}
+
+.project-body {
+
+	font-size:1.2em;
+	padding:50px 25px 50px 25px;
+
+}
+h1.project-title {
+	text-align: center;
+	font-weight:400;
+	font-size:5em;
+}
+
+p.project-description  {
+	width:100%;
+	text-align: center;
+	font-size: 1.4em;
+	color: #aaa;
+
+}
+.app-optionsbar {
+	top: 90px;
+	padding: 0px 10px 0px 10px;
+	position: absolute;
+	width: 100%;
+	border-bottom:1px solid #eee;
+}
+.app-optionsbar .tasks {
+	
+}
+.app-optionsbar a {
+	margin: 0px 5px 0px 5px;
+}
+
+.menu > a {
+	margin: 0px 8px 0px 8px;
+}
+.menu {
+	color: #a99;
+}
+
+.menu > a:not(.active) {
+	cursor: pointer;
+}
+.menu > a.active {
+	cursor:default;
+	color: rgba(0,0,0,0.25) !important;
+}
+
+.app-components-wrapper {
+	border-bottom: 1px solid #eee;
+	display:none;
+	padding: 0 0;
+	margin: 0 0;
+	margin-bottom:35px;
+
+}
+
+.app-components-wrapper > .menu {
+	padding: 5px 5px 5px 10px;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 0px;
+}
+.app-components-wrapper > .menu a:first-child {
+	padding-left:15px;
+}
+.app-components-wrapper > .menu:before {
+	margin-top: 0px;
+	margin-left:10px;
+	color: #ccc;
+	font-size: 0.70em;
+	text-transform: uppercase;
+	content: "Develop";
+
+}
+.app-components-wrapper > div h5 {
+
+	display:inline-block;
+	color: #ccc;
+	padding:6px 18px 6px 18px;
+	font-size: 1em;
+}
+
+.app-components-addmode {
+	display: none;
+}
+
+.app-components-list ul {
+	margin: 0 0;
+	display:inline-block;
+
+}
+.app-components-list ul:before {
+	margin-top: 0px;
+	margin-left:10px;
+	margin-right:10px;
+	color: #ccc;
+	font-size: 0.70em;
+	text-transform: uppercase;
+	content: "Component Types";
+}
+
+.app-components-list ul li {
+	margin: 0 0;
+	color: #da9b9b;;
+	padding: 6px 18px 6px 18px;
+	text-align: center;
+	border-left:0px solid #eee;
+
+	cursor:pointer;
+	display:inline-block;
+
+}
+
+.app-components-list ul li:hover {
+	color: #da6b6b;
+
+}
+.app-components-list ul li.disabled,
+.app-components-list ul li.disabled:hover  {
+	cursor: default;
+	color: #ccc;
+	opacity: 0.5;
+}
+
+.project-components {
+	width:75%;
+	margin: 0 auto;
+}
+
+.project-components > .component {
+	margin-bottom: 2px;
+	padding: 0 0;
+	margin: 10px 0 10px 0;
+}
+.project-components > .editing {
+	color: #aaa;
+	cursor:pointer;
+	border: 1px dashed #ddd;
+}
+
+.project-components > .selected {
+	color: #888 !important;
+	border: 3px solid #084 !important;
+	border-radius:2px;
+	animation: selected;
+	animation-duration:4s;
+	animation-iteration-count:infinite;
+
+	-webkit-animation: selected;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+}
+/* Animation for selected items */
+@keyframes selected
+{
+	0%   {border: 3px solid #9fcd81 ;}
+	50% {border: 3px solid #fff ;}
+	100% {border: 3px solid #9fcd81 ;}
+}
+
+@-webkit-keyframes selected /* Safari and Chrome */
+{
+	0%   {border: 3px solid #9fcd81 ;}
+	50% {border: 3px solid #fff ;}
+	100% {border: 3px solid #9fcd81 ;}
+}
+
+.project-components > .component > span:nth-of-type(1) {
+	white-space: pre-wrap;
+	height: auto;
+
+
+}
+.project-components > .component > span:nth-of-type(2) div {
+	position: relative;
+	font-size: 0.85em;
+	background-color: #fff !important;
+	font-weight:600;
+	top:-20px;
+	left:5%;
+	height:0px;
+}
+.project-components > .component > span:nth-of-type(2) textarea,
+.project-components > .component > span:nth-of-type(2) input {
+	border:none;
+	width: 100%;
+	white-space: pre;
+}
+
+/**************** switch states ****************/
+
+.project-components > .selected > span:first-child {
+	display:none;
+}
+
+.project-components > .component > span:nth-of-type(2) {
+	display: none;
+}
+
+.project-components > .selected > span:nth-of-type(2) {
+	display:block !important;
+}
+/**************** end of switch states ****************/
+
+
+
+
+.project-components >.editing:hover {
+	color: #0ac;
+	border: 1px double #0ac ;
+}
+
+.edit-component-menu {
+	width:100%;
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	background-color: rgba(255,255,255,0.85);
+	border-top:1px solid #eee;
+	display: none;
+	padding: 14px 2% 0px 2%;
+}
+
+.edit-component-menu ul {
+	list-style: none;
+}
+.edit-component-menu ul li {
+	cursor: pointer;
+	display:inline-block;
+	margin: 0 8px 0 8px;
+
+	color:#066;
+	font-size:0.9em;
+	text-transform: uppercase;
+}
+
+.edit-component-menu ul li.unselect {font-size:2em; float: right; position:relative; bottom:10px;}
+
+.edit-component-menu ul li.delete {	color: #a44;}
+
+.edit-component-menu ul li.save-progress {	min-width: 20%;}
+.edit-component-menu ul li.save-progress > span {opacity: 0.5; font-weight:900;}
+
+.edit-component-menu ul li.delete:hover {color: #c44;}
+
+.edit-component-menu ul li:hover {color:#ccc;}
+
+/* * * * * * * * * * * * * * * *  
+	Component Types
+ * * * * * * * * * * * * * * * */
+
+.project-components > .component-text {
+	color: #000;
+	padding-left:5px;
+}
+
+.project-components > .component-header {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: #0aa;
+	border-bottom:1px double #ececec;
+	width: 100%;
+	text-align: center;
+}
+
+.project-components > .component-header span {
+	font-weight: 200;
+	font-size: 1.6em;
+	width:100%;
+
+}

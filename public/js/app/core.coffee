@@ -32,9 +32,8 @@ App.core = core
 
 $(document).ready ->
   
-  console.log "Starting App"
   App.core.start()
-  console.log window.App
+
 
 
 

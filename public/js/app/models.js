@@ -7,7 +7,6 @@ App.ComponentModel = Component = (function() {
   function Component(attributes) {
     _.extend(this, this.defaults);
     _.extend(this, attributes);
-    console.log("component model:", this);
   }
 
   Component.prototype.defaults = {
@@ -135,7 +134,6 @@ App.ProjectModel = Backbone.Model.extend({
         return $(".edit-component-menu li.save-progress").text("Saved.");
       }
     };
-    console.log("saving..");
     return this.save({}, callbax);
   }
 });

@@ -6,13 +6,8 @@ App.Collection = Backbone.Collection.extend({
   model: App.ProjectModel,
   localStorage: new Backbone.LocalStorage("ProjectList"),
   callbacks: {
-    success: function(models) {
-      console.log("Collection Fetched.");
-      return console.log(models.length);
-    },
-    error: function(models) {
-      return console.log("Collection fetch error.");
-    }
+    success: function(models) {},
+    error: function(models) {}
   }
 });
 

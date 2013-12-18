@@ -4,8 +4,7 @@ App.ComponentModel = class Component
   constructor: (attributes) ->
     _.extend @, @defaults
     _.extend @, attributes
-    console.log "component model:", @
-  defaults:
+   defaults:
     #aka underscore templating fallbacks
     "type": "text"
     "text": "[empty]"
@@ -132,8 +131,6 @@ App.ProjectModel = Backbone.Model.extend
       success: ->
         $(".edit-component-menu li.save-progress").text("Saved.")
 
-
-    console.log "saving.."
     @save({}, callbax)
 
 

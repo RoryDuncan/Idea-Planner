@@ -59,12 +59,10 @@ App.View.Item = Backbone.Marionette.ItemView.extend({
     ctx = this;
     return this.model.destroy({
       success: function() {
-        console.log("Model successfully destroyed.");
         return ctx.render();
       },
       error: function(err) {
-        console.warn("Model was not destroyed.");
-        return console.error(err);
+        throw new Error(error);
       }
     });
   }
@@ -118,14 +116,10 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend({
     "add": function(model, collection) {
       var name;
       name = model.get('name');
-      console.log(name + " added to collection");
       return model.save({}, {
-        success: function(a) {
-          return console.log("and the model was saved.");
-        },
+        success: function(a) {},
         error: function(error) {
-          console.warn("and the model was not saved.");
-          return console.error(error);
+          throw new Error(error);
         }
       });
     }
@@ -187,7 +181,6 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
   loadEditView: function() {
     var ComponentSelector, ctx, editor, modsel;
     ComponentSelector = App.View.ComponentSelector;
-    console.log(this);
     ctx = this;
     modsel = new ComponentSelector({
       model: this.model,

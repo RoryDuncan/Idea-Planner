@@ -50,7 +50,6 @@ Router = Backbone.Router.extend({
     });
     App.core.AppContainer.show(singleModelView);
     name = model.get("name");
-    console.log(this);
     this.breadcrumb.set(name);
     return this;
   }

@@ -49,11 +49,10 @@ App.View.Item = Backbone.Marionette.ItemView.extend
     ctx = @
     @model.destroy
       success: ->
-        console.log "Model successfully destroyed."
+
         ctx.render()
       error: (err) ->
-        console.warn "Model was not destroyed."
-        console.error err
+        throw new Error(error)
 
 
 App.View.ProjectList = Backbone.Marionette.CompositeView.extend
@@ -101,14 +100,12 @@ App.View.ProjectList = Backbone.Marionette.CompositeView.extend
     "add": (model, collection) ->
 
       name = model.get('name')
-      console.log name + " added to collection"
 
       model.save {},
         success: (a) ->
-          console.log "and the model was saved."
+          
         error: (error) ->
-          console.warn "and the model was not saved."
-          console.error error
+          throw new Error(error)
 
 
 App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
@@ -163,7 +160,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
   loadEditView: ->
     
     ComponentSelector = App.View.ComponentSelector
-    console.log @
+
     ctx = @
     modsel = new ComponentSelector
       model: @model
@@ -487,7 +484,7 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
       ctx.toggleWrapper();
 
   onRender: ->
-    #console.log @model.components()
+    #
 
   onBeforeClose: ->
     @toggleWrapper()

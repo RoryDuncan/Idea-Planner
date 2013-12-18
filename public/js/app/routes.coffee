@@ -47,7 +47,6 @@ Router = Backbone.Router.extend
 
     #breadcrumbing
     name = model.get "name"
-    console.log @
     @breadcrumb.set name
 
     return @

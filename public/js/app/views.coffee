@@ -22,7 +22,6 @@ App.View.Item = Backbone.Marionette.ItemView.extend
       trigger: true
       replace: true
 
-
   deletePrompt: ->
 
     ctx = @
@@ -45,6 +44,7 @@ App.View.Item = Backbone.Marionette.ItemView.extend
       message: "Are you sure you want to delete <span class='text-danger'>#{ name }</span>?",
       callback: (response) ->
         namePrompt(response)
+  
   deleteModel: ->
     ctx = @
     @model.destroy
@@ -161,10 +161,13 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     @["component:update"]()
 
   loadEditView: ->
+    
     ComponentSelector = App.View.ComponentSelector
-
+    console.log @
+    ctx = @
     modsel = new ComponentSelector
       model: @model
+      modelView: ctx
     editor = modsel
     return editor
 
@@ -214,6 +217,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
         render()
         #then clears (to not exponentially grow)
         compiled = " "
+    @updateComponentStyles()
 
   renderSingleComponent: (id) ->
     return unless id
@@ -307,10 +311,14 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
       $(".selected textarea").addClass("watching")
       $(".selected textarea").focus()
       return "text"
+    header = ->
+      $(".selected input").addClass("watching")
+      $(".selected input").focus()
+      return "header"
 
     type = switch
       when $(".selected").is(".component-text") then text()
-      when $(".selected").is(".component-header") then "header"
+      when $(".selected").is(".component-header") then header()
       when $(".selected").is(".component-resource") then "resource"
       when $(".selected").is(".component-wrapper") then "wrapper"
       when $(".selected").is(".component-image") then "image"
@@ -330,6 +338,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
     $(".edit-component-menu").hide()
     $('.edit-component-menu').attr('id', "");
     @renderComponents true, @
+    @updateComponentStyles()
 
   "component:delete": () ->
     ctx = @
@@ -339,6 +348,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend
         return unless response
         id = ctx.selected.id
         ctx.model.removeComponent(id)
+        ctx.renderComponents(true, ctx )
   
   "component:update": () ->
 
@@ -428,6 +438,28 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend
   className: "app-components-wrapper"
   $preview: $('.app-components-preview')
   events:
+    "click .change-name": ->
+      ctx = @
+      vex.dialog.prompt
+          message: ("Type in a new name:")
+          callback: (projectname) ->
+            return unless projectname
+            ctx.model.save {"name": projectname}
+            ctx.options.modelView.render()
+            vex.dialog.alert
+              message: "<span class='text-success'>Changed name to #{ projectname }.</span>"
+
+    "click .change-description": ->
+      ctx = @
+      vex.dialog.prompt
+          message: ("Type in a new description:")
+          callback: (description) ->
+            return unless description
+            ctx.model.save {"description": description}
+            ctx.options.modelView.render()
+            vex.dialog.alert
+              message: "<span class='text-success'>Changed description to #{ description }.</span>"
+
     "click .add-components": ->
       @toggleComponentsList()
     "click .app-components-list ul li": (e) ->

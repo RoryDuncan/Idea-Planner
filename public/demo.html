@@ -168,7 +168,7 @@
         <div class="app-components-list">
           <ul class="list-unstyled">
             <li class="Wrapper disabled" todo-data-tooltip="For grouping other components">Wrapper</li>
-            <li class="Heading disabled" todo-data-tooltip="A basic text heading.">Heading</li>
+            <li class="Header" todo-data-tooltip="A basic text heading.">Heading</li>
             <li class="Text" todo-data-tooltip="A basic text field.">Text</li>
             <li class="Resource disabled" todo-data-tooltip="A link / URL to another site.">Resource</li>
             <li class="Image disabled" todo-data-tooltip="A .jpg/.png/.gif file.">Image</li>
@@ -181,12 +181,15 @@
   <!-- Component templates -->
 
   <script id="Component-Text"  type="text/template">
-      <div id="<%= id %>" class="component component-text">
-        <span><%= text %></span>
+      <div id="<%= id %>" class="component component-text"><!-- Preserved whitespace--><span><%= text %></span>
         <span><textarea spellcheck="true" component-id="<%= id %>" ><%= text %></textarea></span>
       </div>
   </script>
-  <script id="Component-Header" type="text/template"></script>
+  <script id="Component-Header" type="text/template">
+    <div id="<%= id %>" class="component component-header"><!-- Preserved whitespace--><span><%= text %></span>
+      <span><input type="text" component-id="<%= id %>" value="<%= text %>" /></span>
+    </div>
+  </script>
   <script id="Component-Link"   type="text/template"></script>
   <script id="Component-Image"   type="text/template"></script>
   <script id="Component-CodeSnippet"   type="text/template"></script>

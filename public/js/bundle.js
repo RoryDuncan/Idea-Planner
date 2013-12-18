@@ -16597,10 +16597,13 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     return this["component:update"]();
   },
   loadEditView: function() {
-    var ComponentSelector, editor, modsel;
+    var ComponentSelector, ctx, editor, modsel;
     ComponentSelector = App.View.ComponentSelector;
+    console.log(this);
+    ctx = this;
     modsel = new ComponentSelector({
-      model: this.model
+      model: this.model,
+      modelView: ctx
     });
     editor = modsel;
     return editor;
@@ -16629,6 +16632,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
       type = type.split("");
       type[0] = type[0].toUpperCase();
       type = type.join("");
+      console.log("compiling");
       return html = _.template($("#Component-" + type).html(), component);
     };
     if (bulk === true) {
@@ -16637,9 +16641,9 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
         html = compile(c);
         return compiled += html;
       });
-      return render();
+      render();
     } else {
-      return _.forEach(list, function(c) {
+      _.forEach(list, function(c) {
         var html;
         html = compile(c);
         compiled += html;
@@ -16647,6 +16651,7 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
         return compiled = " ";
       });
     }
+    return this.updateComponentStyles();
   },
   renderSingleComponent: function(id) {
     var compile, component, selector;
@@ -16729,18 +16734,23 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
     return this.renderSingleComponent(this.selected.id);
   },
   selectComponentTypeBranching: function() {
-    var text, type;
+    var header, text, type;
     text = function() {
       $(".selected textarea").addClass("watching");
       $(".selected textarea").focus();
       return "text";
+    };
+    header = function() {
+      $(".selected input").addClass("watching");
+      $(".selected input").focus();
+      return "header";
     };
     type = (function() {
       switch (false) {
         case !$(".selected").is(".component-text"):
           return text();
         case !$(".selected").is(".component-header"):
-          return "header";
+          return header();
         case !$(".selected").is(".component-resource"):
           return "resource";
         case !$(".selected").is(".component-wrapper"):
@@ -16766,7 +16776,8 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
   closeComponentOptions: function() {
     $(".edit-component-menu").hide();
     $('.edit-component-menu').attr('id', "");
-    return this.renderComponents(true, this);
+    this.renderComponents(true, this);
+    return this.updateComponentStyles();
   },
   "component:delete": function() {
     var ctx;
@@ -16779,7 +16790,8 @@ App.View.ProjectSummary = Backbone.Marionette.ItemView.extend({
           return;
         }
         id = ctx.selected.id;
-        return ctx.model.removeComponent(id);
+        ctx.model.removeComponent(id);
+        return ctx.renderComponents(true, ctx);
       }
     });
   },
@@ -16868,6 +16880,44 @@ App.View.ComponentSelector = Backbone.Marionette.ItemView.extend({
   className: "app-components-wrapper",
   $preview: $('.app-components-preview'),
   events: {
+    "click .change-name": function() {
+      var ctx;
+      ctx = this;
+      return vex.dialog.prompt({
+        message: "Type in a new name:",
+        callback: function(projectname) {
+          if (!projectname) {
+            return;
+          }
+          ctx.model.save({
+            "name": projectname
+          });
+          ctx.options.modelView.render();
+          return vex.dialog.alert({
+            message: "<span class='text-success'>Changed name to " + projectname + ".</span>"
+          });
+        }
+      });
+    },
+    "click .change-description": function() {
+      var ctx;
+      ctx = this;
+      return vex.dialog.prompt({
+        message: "Type in a new description:",
+        callback: function(description) {
+          if (!description) {
+            return;
+          }
+          ctx.model.save({
+            "description": description
+          });
+          ctx.options.modelView.render();
+          return vex.dialog.alert({
+            message: "<span class='text-success'>Changed description to " + description + ".</span>"
+          });
+        }
+      });
+    },
     "click .add-components": function() {
       return this.toggleComponentsList();
     },

@@ -176,18 +176,20 @@ p.project-description  {
 	opacity: 0.5;
 }
 
+.project-components {
+	width:75%;
+	margin: 0 auto;
+}
 
 .project-components > .component {
-	
 	margin-bottom: 2px;
 	padding: 0 0;
 	margin: 10px 0 10px 0;
-	border: 1px solid rgba(255,255,255,255);
 }
 .project-components > .editing {
 	color: #aaa;
 	cursor:pointer;
-	border: 1px dashed #ddd ;
+	border: 1px dashed #ddd;
 }
 
 .project-components > .selected {
@@ -218,9 +220,8 @@ p.project-description  {
 }
 
 .project-components > .component > span:nth-of-type(1) {
-	padding: 10px 10px 10px 10px;
-	white-space: pre;
-	height: 100%;
+	white-space: pre-wrap;
+	height: auto;
 
 
 }
@@ -233,11 +234,11 @@ p.project-description  {
 	left:5%;
 	height:0px;
 }
-.project-components > .component > span:nth-of-type(2) textarea {
+.project-components > .component > span:nth-of-type(2) textarea,
+.project-components > .component > span:nth-of-type(2) input {
 	border:none;
-	padding: 10px 10px 10px 10px;
 	width: 100%;
-	white-space: pre-wrap;
+	white-space: pre;
 }
 
 /**************** switch states ****************/
@@ -268,12 +269,10 @@ p.project-description  {
 	position:fixed;
 	left:0px;
 	bottom:0px;
-
-	background-color: #363636;
-	border-top:1px solid #444;
+	background-color: rgba(255,255,255,0.85);
+	border-top:1px solid #eee;
 	display: none;
 	padding: 14px 2% 0px 2%;
-	border-bottom:5px solid 303030;
 }
 
 .edit-component-menu ul {
@@ -284,7 +283,7 @@ p.project-description  {
 	display:inline-block;
 	margin: 0 8px 0 8px;
 
-	color:#aaa;
+	color:#066;
 	font-size:0.9em;
 	text-transform: uppercase;
 }
@@ -300,3 +299,27 @@ p.project-description  {
 
 .edit-component-menu ul li:hover {color:#ccc;}
 
+/* * * * * * * * * * * * * * * *  
+	Component Types
+ * * * * * * * * * * * * * * * */
+
+.project-components > .component-text {
+	color: #000;
+	padding-left:5px;
+}
+
+.project-components > .component-header {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: #0aa;
+	border-bottom:1px double #ececec;
+	width: 100%;
+	text-align: center;
+}
+
+.project-components > .component-header span {
+	font-weight: 200;
+	font-size: 1.6em;
+	width:100%;
+
+}
